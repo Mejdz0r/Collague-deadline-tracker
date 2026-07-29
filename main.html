@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    
+</head>
+
+<!--TODO: Implement the calendar view ( insert from JS whole calendar year )-->
+<body><!--
+<section class="main">
+    <div class="container">
+        <div class="header">
+            <h1>Deadline Tracker</h1>
+        </div>
+        <div class="content">
+            <div class="subject-container">
+                <div class="subject-header">
+                    <h2>Subjects</h2>
+                    <button id="suButton">Add Subject</button>
+                </div>
+                <ul id="subjectList" class="subject-list"></ul>
+            </div>
+            <div class="task-container">
+                <div class="task-header">
+                    <h2>Tasks</h2>
+                    <button id="taButton">Add Task</button>
+                </div>
+                <ul id="taskList" class="task-list"></ul>
+            </div>
+        </div>
+    </div>
+
+<br><hr><br>-->
+<section class="calendar-box">
+<section class="calendar-header">
+    <button id="prevMonth">Previous Month</button>
+    <h2 id="monthYear"></h2>
+    <button id="nextMonth">Next Month</button>
+</section>
+    <section id="calendar">
+        <table id="calendarTable">
+            <thead>
+                <tr>
+                    <th>Mon</th>
+                    <th>Tue</th>
+                    <th>Wed</th>
+                    <th>Thu</th>
+                    <th>Fri</th>
+                    <th>Sat</th>
+                    <th>Sun</th>
+                </tr>
+            </thead>
+            <tbody id="calendarBody">
+                <!-- Calendar days will be generated here -->
+            </tbody>
+        </table>
+    </section>
+<script src="base.js"></script>
+</section>
+</body>
+</html>

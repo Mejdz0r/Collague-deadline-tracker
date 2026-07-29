@@ -1,0 +1,31 @@
+.calendar-box{
+    background-color: red;
+    width: 90vw;
+    height: 90vh;
+    border-radius: 10px;
+    margin:auto;
+}
+.calendar-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+}
+.calendar-header h2{
+    font-size: 24px;
+    margin: 0;
+}
+#calendarTable {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 10px;
+  background-color: transparent;
+}
+
+#calendarTable thead th {
+  background-color: #f2f2f2;
+  padding: 10px;
+  text-align: center;
+  font-weight: bold;
+  border-radius: 5px;
+}
