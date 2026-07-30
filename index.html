@@ -8,41 +8,23 @@
     
 </head>
 
-<!--TODO: Implement the calendar view ( insert from JS whole calendar year )-->
-<body><!--
-<section class="main">
-    <div class="container">
-        <div class="header">
-            <h1>Deadline Tracker</h1>
-        </div>
-        <div class="content">
-            <div class="subject-container">
-                <div class="subject-header">
-                    <h2>Subjects</h2>
-                    <button id="suButton">Add Subject</button>
-                </div>
-                <ul id="subjectList" class="subject-list"></ul>
-            </div>
-            <div class="task-container">
-                <div class="task-header">
-                    <h2>Tasks</h2>
-                    <button id="taButton">Add Task</button>
-                </div>
-                <ul id="taskList" class="task-list"></ul>
-            </div>
-        </div>
-    </div>
-
-<br><hr><br>-->
+<!--TODO: Zamrożony czas zegara: Deklarujesz czas (hour, minute, second) na samej górze pliku tylko jeden raz. 
+Twój setInterval wywołuje się co sekundę, ale używa ciągle "starych" wartości z sekundy zero. Żeby zegar tykał, pobieranie aktualnego czasu (now.getHours() itd.) 
+musi znajdować się wewnątrz funkcji creatingCalendarBox.
+Koniec roku: W Twojej instrukcji switch ostatni miesiąc to case 11 (grudzień). 
+Jeśli przeklikasz się dalej, displayMonth przyjmie wartość 12. Ponieważ nie masz case 12:, napis na ekranie po prostu zniknie, a kalendarz się zepsuje. 
+Będziesz musiał wewnątrz nextMonth napisać instrukcję if, która po przekroczeniu 11 "cofa" miesiąc na 0 (styczeń) i dodaje 1 do roku.-->
+<body>
 <section class="calendar-box">
 <section class="calendar-header">
     <button id="prevMonth">Previous Month</button>
-    <h2 id="monthYear"></h2>
+    <h2 id="dateDisplay"></h2>
+    <h2 id="chosenMonth"></h2>
     <button id="nextMonth">Next Month</button>
 </section>
     <section id="calendar">
         <table id="calendarTable">
-            <thead>
+            <tbody id="calendarBody">
                 <tr>
                     <th>Mon</th>
                     <th>Tue</th>
@@ -52,9 +34,42 @@
                     <th>Sat</th>
                     <th>Sun</th>
                 </tr>
-            </thead>
-            <tbody id="calendarBody">
-                <!-- Calendar days will be generated here -->
+                <tr>
+                    <th>Mon</th>
+                    <th>Tue</th>
+                    <th>Wed</th>
+                    <th>Thu</th>
+                    <th>Fri</th>
+                    <th>Sat</th>
+                    <th>Sun</th>
+                </tr>
+                <tr>
+                    <th>Mon</th>
+                    <th>Tue</th>
+                    <th>Wed</th>
+                    <th>Thu</th>
+                    <th>Fri</th>
+                    <th>Sat</th>
+                    <th>Sun</th>
+                </tr>
+                <tr>
+                    <th>Mon</th>
+                    <th>Tue</th>
+                    <th>Wed</th>
+                    <th>Thu</th>
+                    <th>Fri</th>
+                    <th>Sat</th>
+                    <th>Sun</th>
+                </tr>
+                <tr>
+                    <th>Mon</th>
+                    <th>Tue</th>
+                    <th>Wed</th>
+                    <th>Thu</th>
+                    <th>Fri</th>
+                    <th>Sat</th>
+                    <th>Sun</th>
+                </tr>
             </tbody>
         </table>
     </section>
