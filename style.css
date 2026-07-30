@@ -22,10 +22,14 @@
   background-color: transparent;
 }
 
-#calendarTable thead th {
+#calendarTable tbody th {
   background-color: #f2f2f2;
   padding: 10px;
   text-align: center;
   font-weight: bold;
   border-radius: 5px;
+  height: 12vh;
+}
+#calendarTable tbody th:hover {
+  background-color: #e0e0e0;
 }
