@@ -1,35 +1,68 @@
-.calendar-box{
-    background-color: red;
+.calendar-box {
+    background-color: #ffffff;
     width: 90vw;
     height: 90vh;
     border-radius: 10px;
-    margin:auto;
+    margin: auto;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5); 
+    display: flex;
+    flex-direction: column; /* Układa nagłówek i kalendarz jeden pod drugim */
 }
-.calendar-header{
+
+.calendar-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 10px;
 }
-.calendar-header h2{
+
+.calendar-header h2 {
     font-size: 24px;
     margin: 0;
 }
-#calendarTable {
-  width: 100%;
-  border-collapse: separate;
-  border-spacing: 10px;
-  background-color: transparent;
+
+/* Nowe style dla sekcji trzymającej tabelę */
+#calendar {
+    flex: 1; /* Wypełnia dostępną przestrzeń pod nagłówkiem */
+    padding: 0 10px 10px 10px;
 }
 
-#calendarTable tbody th {
-  background-color: #f2f2f2;
-  padding: 10px;
-  text-align: center;
-  font-weight: bold;
-  border-radius: 5px;
-  height: 12vh;
+#calendarTable {
+    width: 100%;
+    height: 100%; /* Tabela rozciąga się na 100% miejsca z flex: 1 */
+    border-collapse: separate;
+    border-spacing: 10px;
+    background-color: transparent;
 }
-#calendarTable tbody th:hover {
-  background-color: #e0e0e0;
+
+#calendarTable tbody td {
+    background-color: #f2f2f2;
+    padding: 10px;
+    text-align: center;
+    font-weight: bold;
+    border-radius: 5px;
+    vertical-align: top;
+    /* Usunięte sztywne height: 12vh; */
+}
+
+#calendarTable tbody td:hover {
+    background-color: #e0e0e0;
+    cursor: pointer;
+}
+
+/* Zwykłe nazwy dni */
+.day-name {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 5px;
+}
+
+/* Dni z poprzedniego i następnego miesiąca */
+#calendarTable tbody td.inactive-month {
+    background-color: #e8e8e8;
+    color: #a0a0a0;
+}
+
+#calendarTable tbody td.inactive-month .day-name {
+    color: #a0a0a0;
 }
