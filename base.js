@@ -2,6 +2,10 @@ const nextMontButton = document.getElementById("nextMonth");
 const prevMonthButton = document.getElementById("prevMonth");
 const dateDisplay = document.getElementById("dateDisplay");
 const chosenMonth = document.getElementById("chosenMonth");
+const calendarBody = document.getElementById("calendarBody");
+const dayNames = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+const actionComm = document.querySelector(".actionComm");
+const closeButton = document.getElementById("closeButton");
  const now = new Date();
     const currentDate = now.getDate();
     const currentMonth = now.getMonth();
@@ -87,8 +91,6 @@ const switchingMonth = () => {
             break;
     }
 };
-const calendarBody = document.getElementById("calendarBody");
-const dayNames = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
 const renderCalendar = () => {
     calendarBody.innerHTML = "";
@@ -144,6 +146,13 @@ const renderCalendar = () => {
         }
     }
 };
+const actionAdding = () => {
+    const clickedCell = event.target.closest("td");
+    if (!clickedCell) return;
+    actionComm.style.display = "block";
+    }
+closeButton.addEventListener("click", () => { actionComm.style.display = "none"; });
+calendarBody.addEventListener("click", actionAdding);
 nextMontButton.addEventListener("click", nextMonth);
 prevMonthButton.addEventListener("click", prevMonth);
 
