@@ -8,15 +8,15 @@
     
 </head>
 
-<!--TODO: -->
+<!--TODO: naprawic CSS dodac overflow do pojawiajacych sie dodatkowych elementow-->
 <body>
-<section class="calendar-box">
-<section class="calendar-header">
-    <button id="prevMonth">Previous Month</button>
-    <h2 id="dateDisplay"></h2>
-    <h2 id="chosenMonth"></h2>
-    <button id="nextMonth">Next Month</button>
-</section>
+    <section class="calendar-box">
+    <section class="calendar-header">
+        <button id="prevMonth">Previous Month</button>
+        <h2 id="dateDisplay"></h2>
+        <h2 id="chosenMonth"></h2>
+        <button id="nextMonth">Next Month</button>
+    </section>
     <section id="calendar">
         <table id="calendarTable">
             <tbody id="calendarBody">
@@ -25,16 +25,33 @@
             </tbody>
         </table>
     </section>
-    <div class="actionComm">
-        <button id="closeButton">X</button>
-        <p></p>
-        <p>Add your content here</p>
-        <select name="categoryName" id="categoryId">
-            <option value="1">Category 1</option>
-            <option value="2">Category 2</option>
-            <option value="3">Category 3</option>
-        </select>
-    </div>
+        <div class="actionComm">
+            <button id="closeButton">X</button>
+                <div id="actionContent">
+                <label for="categoryName">Category:</label>
+                <select name="categoryName" id="categoryId">
+                    <option value="1">Colleague</option>
+                    <option value="2">Work</option>
+                    <option value="4">Add other Category</option>
+                </select>
+            <label for="dateInput">Date:</label>
+            <input type="date" id="dateInput">
+            <label for="timeInputStarts">Start Time:</label>
+            <input type="time" id="timeInputStarts">
+            <label for="timeInputEnds">End Time:</label>
+            <input type="time" id="timeInputEnds">
+            <p id="showMore">Show More</p>
+                <div id="additionalInputs">
+                    <label for="textInput">Text:</label>
+                    <input type="text" id="textInput" placeholder="Enter text">
+                    <label for="checkboxCategory">Checkbox</label>
+                    <input type="checkbox" id="checkboxCategory">
+                    <label for="colorCategory">Color:</label>
+                    <input type="color" id="colorCategory">
+                </div>
+            <button id="saveButton">Save</button>
+            
+        </div>
 <script src="base.js"></script>
 </section>
 </body>
