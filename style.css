@@ -100,23 +100,24 @@
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 70cqw;
-    height: 70cqh;
+    width: 90cqw;
+    height: 90cqh;
     transform: translate(-50%, -50%);
     background-color: #ffffff;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.5);
     z-index: 1000;
-     /* <-- DODAJ TĘ LINIJKĘ */
+    box-sizing: border-box;
 }
 #actionContent {
     margin-top: 40px; /* Odstęp od przycisku zamykania */
+    height: calc(100% - 40px);
     display: flex;
     flex-direction: column;
     gap: 10px; /* Odstęp między elementami */
 }
-#textInput, #dateInput, #timeInputStarts, #timeInputEnds, #categoryId, #saveButton, #textInput, #checkboxCategory, #colorCategory{
+#textInput, #dateInput, #timeInputStarts, #timeInputEnds, #categoryId, #saveButton, #textInput, #checkboxCategory, #colorCategory, #showMore, #categorySelect {
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -126,8 +127,26 @@
     color: #999;
 }
 #additionalInputs {
-    display: flex;
+    display: none;
     flex-direction: column;
     gap: 10px;
     overflow-y: auto;
+}
+#saveButton {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+#showMore {
+    background-color: #008CBA;
+    color: white;
+    border: none;
+    cursor: pointer;
+    width: 10%;
+}
+#actionDate {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 20px;
 }
