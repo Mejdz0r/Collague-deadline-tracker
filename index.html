@@ -28,28 +28,31 @@
         <div class="actionComm">
             <button id="closeButton">X</button>
                 <div id="actionContent">
+                    <h2 id="actionDate">Action Date</h2>
                 <label for="categoryName">Category:</label>
                 <select name="categoryName" id="categoryId">
                     <option value="1">Colleague</option>
                     <option value="2">Work</option>
                     <option value="4">Add other Category</option>
                 </select>
-            <label for="dateInput">Date:</label>
-            <input type="date" id="dateInput">
             <label for="timeInputStarts">Start Time:</label>
             <input type="time" id="timeInputStarts">
             <label for="timeInputEnds">End Time:</label>
             <input type="time" id="timeInputEnds">
-            <p id="showMore">Show More</p>
+            <button id="showMore">Show more</button>
+            <button id="saveButton">Save</button>
                 <div id="additionalInputs">
                     <label for="textInput">Text:</label>
                     <input type="text" id="textInput" placeholder="Enter text">
-                    <label for="checkboxCategory">Checkbox</label>
-                    <input type="checkbox" id="checkboxCategory">
-                    <label for="colorCategory">Color:</label>
+                    <label for ="categorySelect">Category:</label>
+                    <select id="categorySelect">
+                        <option value="1">Colleague</option>
+                        <option value="2">Work</option>
+                    </select>
+                    <label for="colorCategory">Chose color:</label>
                     <input type="color" id="colorCategory">
                 </div>
-            <button id="saveButton">Save</button>
+            
             
         </div>
 <script src="base.js"></script>
