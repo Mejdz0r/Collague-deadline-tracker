@@ -6,6 +6,9 @@ const calendarBody = document.getElementById("calendarBody");
 const dayNames = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 const actionComm = document.querySelector(".actionComm");
 const closeButton = document.getElementById("closeButton");
+const showMoreButton = document.getElementById("showMore");
+const additionalInputs = document.getElementById("additionalInputs");
+const actionDate = document.getElementById("actionDate");
  const now = new Date();
     const currentDate = now.getDate();
     const currentMonth = now.getMonth();
@@ -151,11 +154,21 @@ const actionAdding = () => {
     if (!clickedCell) return;
     actionComm.style.display = "block";
     }
+const actionForDate = () => {
+    // dokonczyc funkcje do wyswietlania daty w actionDate
+};
 closeButton.addEventListener("click", () => { actionComm.style.display = "none"; });
 calendarBody.addEventListener("click", actionAdding);
 nextMontButton.addEventListener("click", nextMonth);
 prevMonthButton.addEventListener("click", prevMonth);
-
+showMoreButton.addEventListener("click", () => { 
+    if (additionalInputs.style.display != "flex"){ 
+        additionalInputs.style.display = "flex";
+        showMoreButton.textContent = "Show less";}
+        else { 
+            additionalInputs.style.display = "none"; 
+            showMoreButton.textContent = "Show more";}
+        });
 creatingCalendarBox();
 renderCalendar();
 switchingMonth();
