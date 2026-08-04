@@ -9,7 +9,9 @@ const closeButton = document.getElementById("closeButton");
 const showMoreButton = document.getElementById("showMore");
 const additionalInputs = document.getElementById("additionalInputs");
 const actionDate = document.getElementById("actionDate");
- const now = new Date();
+const saveButton = document.getElementById("saveButton");
+const categories = ["Colleague", "Work"];
+const now = new Date();
     const currentDate = now.getDate();
     const currentMonth = now.getMonth();
     let displayMonth = currentMonth;
@@ -149,15 +151,32 @@ const renderCalendar = () => {
         }
     }
 };
-const actionAdding = () => {
+const actionAdding = (event) => { 
+    // 1. Sprawdzamy, w co kliknięto (dodaliśmy 'event' jako parametr funkcji)
     const clickedCell = event.target.closest("td");
+    
+    // Jeśli kliknięto poza komórką (np. w pustą przestrzeń tabeli), przerywamy
     if (!clickedCell) return;
+    
+    // 2. Pobieramy numer dnia z klikniętej komórki
+    const dayNumber = clickedCell.querySelector(".day-number").textContent;
+    
+    // 3. Wpisujemy datę do nagłówka (zastępujemy całość, żeby daty się nie dublowały)
+    // Dodajemy +1 do displayMonth, bo miesiące w JS są liczone od 0
+    actionDate.textContent = `Action Date: ${displayYear}-${displayMonth + 1}-${dayNumber}`;
+    
+    // 4. Pokazujemy modal
     actionComm.style.display = "block";
-    }
-const actionForDate = () => {
-    // dokonczyc funkcje do wyswietlania daty w actionDate
 };
-closeButton.addEventListener("click", () => { actionComm.style.display = "none"; });
+const addingEvent = () => {
+    const chosenCategory = document.getElementById("categoryId");
+alert(chosenCategory);
+}
+closeButton.addEventListener("click", () => { 
+    actionComm.style.display = "none"; 
+    additionalInputs.style.display = "none"; 
+    showMoreButton.textContent = "Show more";
+});
 calendarBody.addEventListener("click", actionAdding);
 nextMontButton.addEventListener("click", nextMonth);
 prevMonthButton.addEventListener("click", prevMonth);
@@ -169,6 +188,7 @@ showMoreButton.addEventListener("click", () => {
             additionalInputs.style.display = "none"; 
             showMoreButton.textContent = "Show more";}
         });
+saveButton.addEventListener("click", addingEvent);
 creatingCalendarBox();
 renderCalendar();
 switchingMonth();
