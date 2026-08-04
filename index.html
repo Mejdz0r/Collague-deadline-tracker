@@ -8,7 +8,7 @@
     
 </head>
 
-<!--TODO: naprawic CSS dodac overflow do pojawiajacych sie dodatkowych elementow-->
+<!--TODO: naprawic wyswietlanie daty w okienku bo z zeszlego miesiaca nie wyswietla daty miesiaca-->
 <body>
     <section class="calendar-box">
     <section class="calendar-header">
@@ -29,11 +29,12 @@
             <button id="closeButton">X</button>
                 <div id="actionContent">
                     <h2 id="actionDate">Action Date</h2>
+                <label for="actionTittle">Action Title:</label>
+                <input type="text" id="actionTittle">
                 <label for="categoryName">Category:</label>
                 <select name="categoryName" id="categoryId">
                     <option value="1">Colleague</option>
                     <option value="2">Work</option>
-                    <option value="4">Add other Category</option>
                 </select>
             <label for="timeInputStarts">Start Time:</label>
             <input type="time" id="timeInputStarts">
@@ -49,8 +50,14 @@
                         <option value="1">Colleague</option>
                         <option value="2">Work</option>
                     </select>
-                    <label for="colorCategory">Chose color:</label>
+                    <label for="colorCategory">Changing Color(of category):</label>
                     <input type="color" id="colorCategory">
+                    <label for="newCategory">Adding new category:</label>
+                    <input type="text" id="newCategory">
+                    <label for="colorNewCategory">Color of new category:</label>
+                    <input type="color" id="colorNewCategory">
+                    <button id="addCategoryButton">Add Category</button>
+
                 </div>
             
             
