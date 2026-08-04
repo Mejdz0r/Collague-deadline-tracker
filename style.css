@@ -1,3 +1,8 @@
+body{
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+
+}
 .calendar-box {
     background-color: #ffffff;
     width: 90vw;
@@ -20,6 +25,14 @@
 .calendar-header h2 {
     font-size: 24px;
     margin: 0;
+}
+#prevMonth, #nextMonth {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
 }
 
 /* Nowe style dla sekcji trzymającej tabelę */
@@ -117,7 +130,10 @@
     flex-direction: column;
     gap: 10px; /* Odstęp między elementami */
 }
-#textInput, #dateInput, #timeInputStarts, #timeInputEnds, #categoryId, #saveButton, #textInput, #checkboxCategory, #colorCategory, #showMore, #categorySelect {
+#textInput, #dateInput, #timeInputStarts, #timeInputEnds, 
+#categoryId, #saveButton, #textInput, #checkboxCategory, #showMore, 
+#categorySelect, #newCategory, #colorNewCategory, #addCategoryButton,
+#actionTittle, #colorCategory {
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -138,7 +154,7 @@
     border: none;
     cursor: pointer;
 }
-#showMore {
+#showMore, #addCategoryButton{
     background-color: #008CBA;
     color: white;
     border: none;
