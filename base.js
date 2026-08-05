@@ -11,6 +11,7 @@ const additionalInputs = document.getElementById("additionalInputs");
 const actionDate = document.getElementById("actionDate");
 const saveButton = document.getElementById("saveButton");
 const categories = ["Colleague", "Work"];
+const addCategoryButton = document.getElementById("addCategoryButton");
 const now = new Date();
     const currentDate = now.getDate();
     const currentMonth = now.getMonth();
@@ -152,26 +153,62 @@ const renderCalendar = () => {
     }
 };
 const actionAdding = (event) => { 
-    // 1. Sprawdzamy, w co kliknięto (dodaliśmy 'event' jako parametr funkcji)
     const clickedCell = event.target.closest("td");
     
-    // Jeśli kliknięto poza komórką (np. w pustą przestrzeń tabeli), przerywamy
     if (!clickedCell) return;
     
-    // 2. Pobieramy numer dnia z klikniętej komórki
-    const dayNumber = clickedCell.querySelector(".day-number").textContent;
     
-    // 3. Wpisujemy datę do nagłówka (zastępujemy całość, żeby daty się nie dublowały)
-    // Dodajemy +1 do displayMonth, bo miesiące w JS są liczone od 0
-    actionDate.textContent = `Action Date: ${displayYear}-${displayMonth + 1}-${dayNumber}`;
+    const dayNumber = parseInt(clickedCell.querySelector(".day-number").textContent);
     
-    // 4. Pokazujemy modal
+    
+    let actionMonth = displayMonth + 1; 
+    let actionYear = displayYear;
+
+    // Sprawdzamy, czy kliknięto w szary dzień (inny miesiąc)
+    if (clickedCell.classList.contains("inactive-month")) {
+        if (dayNumber > 15) {
+            
+            actionMonth -= 1;
+            
+            if (actionMonth === 0) {
+                actionMonth = 12;
+                actionYear -= 1;
+            }
+        } else {
+            
+            actionMonth += 1;
+            
+            if (actionMonth === 13) {
+                actionMonth = 1;
+                actionYear += 1;
+            }
+        }
+    }
+    
+    // Zapisujemy poprawną, wyliczoną datę
+    actionDate.textContent = `Action Date: ${actionYear}-${actionMonth}-${dayNumber}`;
     actionComm.style.display = "block";
 };
 const addingEvent = () => {
     const chosenCategory = document.getElementById("categoryId");
 alert(chosenCategory);
-}
+};
+const addNewCategory = () => {
+    const newCategoryInput = document.getElementById("newCategory");
+    const newCategory = newCategoryInput.value.trim();
+    if (newCategory) {
+       let newCategoryUpper = newCategory.charAt(0).toUpperCase() + newCategory.slice(1).toLowerCase();
+        if(categories.includes(newCategoryUpper)) {
+            alert("Category already exists!");
+            return;
+        }
+        const option = document.createElement("option");
+        option.value = newCategoryUpper;
+        option.textContent = newCategoryUpper;
+        document.getElementById("categoryId").appendChild(option);
+        newCategoryInput.value = "";
+    }
+};
 closeButton.addEventListener("click", () => { 
     actionComm.style.display = "none"; 
     additionalInputs.style.display = "none"; 
@@ -189,6 +226,7 @@ showMoreButton.addEventListener("click", () => {
             showMoreButton.textContent = "Show more";}
         });
 saveButton.addEventListener("click", addingEvent);
+addCategoryButton.addEventListener("click", addNewCategory);
 creatingCalendarBox();
 renderCalendar();
 switchingMonth();
