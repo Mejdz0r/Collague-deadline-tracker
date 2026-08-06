@@ -12,6 +12,7 @@ const actionDate = document.getElementById("actionDate");
 const saveButton = document.getElementById("saveButton");
 const categories = ["Colleague", "Work"];
 const addCategoryButton = document.getElementById("addCategoryButton");
+const callbackDiv = document.querySelector(".callback");
 const now = new Date();
     const currentDate = now.getDate();
     const currentMonth = now.getMonth();
@@ -196,18 +197,30 @@ alert(chosenCategory);
 const addNewCategory = () => {
     const newCategoryInput = document.getElementById("newCategory");
     const newCategory = newCategoryInput.value.trim();
-    if (newCategory) {
+    if (!newCategory) {
+        positiveOrNegative("Please enter a category name!", false);
+        return;
+    }
        let newCategoryUpper = newCategory.charAt(0).toUpperCase() + newCategory.slice(1).toLowerCase();
         if(categories.includes(newCategoryUpper)) {
-            alert("Category already exists!");
+            positiveOrNegative("Category already exists!", false);
             return;
         }
+        categories.push(newCategoryUpper);
         const option = document.createElement("option");
         option.value = newCategoryUpper;
         option.textContent = newCategoryUpper;
         document.getElementById("categoryId").appendChild(option);
         newCategoryInput.value = "";
+        positiveOrNegative("Category added successfully!", true);
     }
+const positiveOrNegative = (message, isPositive) => {
+    callbackDiv.textContent = message;
+    callbackDiv.style.display = "flex";
+    callbackDiv.style.backgroundColor = isPositive ? "green" : "red";
+    setTimeout(() => {
+        callbackDiv.style.display = "none";
+    }, 3000)
 };
 closeButton.addEventListener("click", () => { 
     actionComm.style.display = "none"; 
