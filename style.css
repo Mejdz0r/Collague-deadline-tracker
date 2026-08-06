@@ -1,1 +1,204 @@
+body{
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
 
+}
+.calendar-box {
+    background-color: #ffffff;
+    width: 90vw;
+    height: 90vh;
+    border-radius: 10px;
+    margin: auto;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5); 
+    display: flex;
+    flex-direction: column; /* Układa nagłówek i kalendarz jeden pod drugim */
+    container-type: size;
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+}
+
+.calendar-header h2 {
+    font-size: 24px;
+    margin: 0;
+}
+#prevMonth, #nextMonth {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+/* Nowe style dla sekcji trzymającej tabelę */
+#calendar {
+    flex: 1; /* Wypełnia dostępną przestrzeń pod nagłówkiem */
+    padding: 0 10px 10px 10px;
+}
+
+#calendarTable {
+    width: 100%;
+    height: 100%; /* Tabela rozciąga się na 100% miejsca z flex: 1 */
+    border-collapse: separate;
+    border-spacing: 10px;
+    background-color: transparent;
+}
+
+#calendarTable tbody td {
+    background-color: #f2f2f2;
+    padding: 10px;
+    text-align: center;
+    font-weight: bold;
+    border-radius: 5px;
+    vertical-align: top;
+    /* Usunięte sztywne height: 12vh; */
+}
+
+#calendarTable tbody td:hover {
+    background-color: #e0e0e0;
+    cursor: pointer;
+}
+
+/* Zwykłe nazwy dni */
+.day-name {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 5px;
+}
+
+/* Dni z poprzedniego i następnego miesiąca */
+#calendarTable tbody td.inactive-month {
+    background-color: #e8e8e8;
+    color: #a0a0a0;
+}
+
+#calendarTable tbody td.inactive-month .day-name {
+    color: #a0a0a0;
+}
+.actionComm {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 70cqw;
+    height: 70cqh;
+    transform: translate(-50%, -50%);
+    background-color:   #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+    z-index: 1000;
+}
+#closeButton {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: transparent;
+    border: 1px solid black;
+    border-radius: 50px;
+    padding: 5px 10px;
+    font-size: 18px;
+    cursor: pointer;
+}
+#closeButton:hover {
+    background-color:   red;
+}
+.actionComm {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 90cqw;
+    height: 90cqh;
+    transform: translate(-50%, -50%);
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+    z-index: 1000;
+    box-sizing: border-box;
+}
+#actionContent {
+    margin-top: 40px; /* Odstęp od przycisku zamykania */
+    height: calc(100% - 40px);
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Odstęp między elementami */
+}
+#textInput, #dateInput, #timeInputStarts, #timeInputEnds, 
+#categoryId, #saveButton, #textInput, #checkboxCategory, #showMore, 
+#categorySelect, #newCategory, #colorNewCategory, #addCategoryButton,
+#actionTittle, #colorCategory {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+#textInput::placeholder {
+    color: #999;
+}
+#additionalInputs {
+    display: none;
+    flex-direction: column;
+    gap: 10px;
+    overflow-y: auto;
+}
+#saveButton {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+#showMore, #addCategoryButton{
+    background-color: #008CBA;
+    color: white;
+    border: none;
+    cursor: pointer;
+    width: 10%;
+}
+#actionDate {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+.callback{
+    position: fixed;
+    top: 1cqh;
+    right: 1cqw;
+    width: 10%;
+    height: 10%;
+    display: none;
+    z-index: 1001; 
+    text-align: center;
+    justify-content: center; 
+    align-items: center;
+    color: white; 
+    font-weight: bold;
+    border-radius: 5px;
+    
+}
+.callbackNegative{
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 10%;
+    height: 10%;
+    background-color: rgba(255, 0, 0, 0.5);
+    z-index: 1001; 
+}
+.callbackPositive{
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 10%;
+    height: 10%;
+    background-color: rgba(0, 255, 0, 0.5);
+    z-index: 100;
+
+    
+}
