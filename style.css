@@ -166,3 +166,39 @@ body{
     font-size: 24px;
     margin-bottom: 20px;
 }
+.callback{
+    position: fixed;
+    top: 1cqh;
+    right: 1cqw;
+    width: 10%;
+    height: 10%;
+    display: none;
+    z-index: 1001; 
+    text-align: center;
+    justify-content: center; 
+    align-items: center;
+    color: white; 
+    font-weight: bold;
+    border-radius: 5px;
+    
+}
+.callbackNegative{
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 10%;
+    height: 10%;
+    background-color: rgba(255, 0, 0, 0.5);
+    z-index: 1001; 
+}
+.callbackPositive{
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 10%;
+    height: 10%;
+    background-color: rgba(0, 255, 0, 0.5);
+    z-index: 100;
+
+    
+}
