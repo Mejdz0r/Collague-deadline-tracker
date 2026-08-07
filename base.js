@@ -46,7 +46,7 @@ const creatingCalendarBox = () => {
     dateDisplay.textContent = `${currentDate}/${currentMonth + 1}/${currentYear} ${hour}:${minute}:${second}`;
 
 };
-updateTime = () => {
+const updateTime = () => {
     setInterval(() => {
         creatingCalendarBox();
     }, 1000);
@@ -211,6 +211,7 @@ const addNewCategory = () => {
         option.value = newCategoryUpper;
         option.textContent = newCategoryUpper;
         document.getElementById("categoryId").appendChild(option);
+        document.getElementById("categorySelect").appendChild(option.cloneNode(true));
         newCategoryInput.value = "";
         positiveOrNegative("Category added successfully!", true);
     }
@@ -221,6 +222,36 @@ const positiveOrNegative = (message, isPositive) => {
     setTimeout(() => {
         callbackDiv.style.display = "none";
     }, 3000)
+};
+const getTimes = () => {
+    const startTime = document.getElementById("timeInputStarts").value;
+    const endTime = document.getElementById("timeInputEnds").value;
+    return { startTime, endTime };
+};
+const getTitle = () => {
+    const titleInput = document.getElementById("actionTittle");
+    return titleInput.value.trim();
+};
+const getDescription = () => {
+    const descriptionInput = document.getElementById("textInput");
+    return descriptionInput.value.trim();
+};
+const getCategory = () => {
+    const categorySelect = document.getElementById("categoryId");
+    return categorySelect.options[categorySelect.selectedIndex].text;
+}
+const outputEventDetails = () => {
+    const { startTime, endTime } = getTimes();
+    const title = getTitle();
+    const description = getDescription();
+    const category = getCategory();
+    alert(`Event Details:
+        Title: ${title}
+        Description: ${description}
+        Category: ${category}
+        Start Time: ${startTime}
+        End Time: ${endTime}
+    `);
 };
 closeButton.addEventListener("click", () => { 
     actionComm.style.display = "none"; 
@@ -238,7 +269,10 @@ showMoreButton.addEventListener("click", () => {
             additionalInputs.style.display = "none"; 
             showMoreButton.textContent = "Show more";}
         });
-saveButton.addEventListener("click", addingEvent);
+saveButton.addEventListener("click", () => {
+    outputEventDetails();
+    actionAdding();
+ });
 addCategoryButton.addEventListener("click", addNewCategory);
 creatingCalendarBox();
 renderCalendar();
