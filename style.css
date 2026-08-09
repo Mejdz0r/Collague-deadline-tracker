@@ -133,7 +133,7 @@ body{
 #textInput, #dateInput, #timeInputStarts, #timeInputEnds, 
 #categoryId, #saveButton, #textInput, #checkboxCategory, #showMore, 
 #categorySelect, #newCategory, #colorNewCategory, #addCategoryButton,
-#actionTittle, #colorCategory {
+#actionTittle, #colorCategory, #removeCategory, #removeCategoryButton  {
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -154,7 +154,7 @@ body{
     border: none;
     cursor: pointer;
 }
-#showMore, #addCategoryButton{
+#showMore, #addCategoryButton, #removeCategoryButton{
     background-color: #008CBA;
     color: white;
     border: none;
