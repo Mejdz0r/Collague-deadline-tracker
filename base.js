@@ -10,9 +10,14 @@ const showMoreButton = document.getElementById("showMore");
 const additionalInputs = document.getElementById("additionalInputs");
 const actionDate = document.getElementById("actionDate");
 const saveButton = document.getElementById("saveButton");
-const categories = ["Colleague", "Work"];
+const removeCategoryButton = document.getElementById("removeCategoryButton");
+const removeCategorySelect = document.getElementById("removeCategory");
 const addCategoryButton = document.getElementById("addCategoryButton");
 const callbackDiv = document.querySelector(".callback");
+const categorySelect = document.getElementById("categorySelect");
+const categoryId = document.getElementById("categoryId");
+const newCategoryInput = document.getElementById("newCategory");
+const colorOfNewCategory = document.getElementById("colorNewCategory");
 const now = new Date();
     const currentDate = now.getDate();
     const currentMonth = now.getMonth();
@@ -22,6 +27,10 @@ const now = new Date();
     const hour = now.getHours();
     const minute = now.getMinutes();
     const second = now.getSeconds();
+let categories = [
+    {name: "Colleague", color: "#FF5733"}, 
+    {name: "Work", color: "#33FF57"}
+];
 const prevMonth = () => {
     displayMonth--; 
     switchingMonth();
@@ -197,6 +206,8 @@ alert(chosenCategory);
 const addNewCategory = () => {
     const newCategoryInput = document.getElementById("newCategory");
     const newCategory = newCategoryInput.value.trim();
+    const removeCategorySelect = document.getElementById("removeCategory");
+    const newCategoryColor = document.getElementById("colorNewCategory");
     if (!newCategory) {
         positiveOrNegative("Please enter a category name!", false);
         return;
@@ -206,13 +217,16 @@ const addNewCategory = () => {
             positiveOrNegative("Category already exists!", false);
             return;
         }
-        categories.push(newCategoryUpper);
+        let newCategoryColorValue = newCategoryColor.value;
+        categories.push({name: newCategoryUpper, color: newCategoryColorValue});
         const option = document.createElement("option");
         option.value = newCategoryUpper;
         option.textContent = newCategoryUpper;
         document.getElementById("categoryId").appendChild(option);
         document.getElementById("categorySelect").appendChild(option.cloneNode(true));
+        document.getElementById("removeCategory").appendChild(option.cloneNode(true));
         newCategoryInput.value = "";
+        newCategoryColor.value = "#000000";
         positiveOrNegative("Category added successfully!", true);
     }
 const positiveOrNegative = (message, isPositive) => {
@@ -253,6 +267,48 @@ const outputEventDetails = () => {
         End Time: ${endTime}
     `);
 };
+const renderCategoriesList = () => {
+    
+    categoryId.innerHTML = "";
+    categorySelect.innerHTML = "";
+    removeCategorySelect.innerHTML = "";
+
+    
+    categories.forEach(cat => {
+        const option = document.createElement("option");
+        option.value = cat.name;       
+        option.textContent = cat.name; 
+        
+        categoryId.appendChild(option.cloneNode(true));
+        categorySelect.appendChild(option.cloneNode(true));
+        removeCategorySelect.appendChild(option.cloneNode(true));
+    });
+};
+const removeCategory = () => {
+ if(!removeCategorySelect) {
+    positiveOrNegative("Please select a category to remove!", false);
+    return;
+ }
+ const selectedCategory = removeCategorySelect.options[removeCategorySelect.selectedIndex].text;
+ const categoryIndex = categories.findIndex(cat => cat.name === selectedCategory);
+
+if (categoryIndex !== -1) {
+    categories.splice(categoryIndex, 1);
+    
+    const catIdOption = categoryId.querySelector(`option[value="${selectedCategory}"]`);
+    if (catIdOption) catIdOption.remove();
+    
+    const catSelectOption = categorySelect.querySelector(`option[value="${selectedCategory}"]`);
+    if (catSelectOption) catSelectOption.remove();
+    
+    const removeCatOption = removeCategorySelect.querySelector(`option[value="${selectedCategory}"]`);
+    if (removeCatOption) removeCatOption.remove();
+    
+    positiveOrNegative("Category removed successfully!", true);
+} else {
+    positiveOrNegative("Selected category not found!", false);
+}
+};
 closeButton.addEventListener("click", () => { 
     actionComm.style.display = "none"; 
     additionalInputs.style.display = "none"; 
@@ -274,6 +330,7 @@ saveButton.addEventListener("click", () => {
     actionAdding();
  });
 addCategoryButton.addEventListener("click", addNewCategory);
+removeCategoryButton.addEventListener("click", removeCategory);
 creatingCalendarBox();
 renderCalendar();
 switchingMonth();
