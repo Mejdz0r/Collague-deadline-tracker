@@ -11,7 +11,7 @@ body{
     margin: auto;
     box-shadow: 0 4px 10px rgba(0,0,0,0.5); 
     display: flex;
-    flex-direction: column; /* Układa nagłówek i kalendarz jeden pod drugim */
+    flex-direction: column; 
     container-type: size;
 }
 
@@ -35,18 +35,19 @@ body{
     border-radius: 5px;
 }
 
-/* Nowe style dla sekcji trzymającej tabelę */
+
 #calendar {
-    flex: 1; /* Wypełnia dostępną przestrzeń pod nagłówkiem */
+    flex: 1; 
     padding: 0 10px 10px 10px;
 }
 
 #calendarTable {
     width: 100%;
-    height: 100%; /* Tabela rozciąga się na 100% miejsca z flex: 1 */
+    height: 100%; 
     border-collapse: separate;
     border-spacing: 10px;
     background-color: transparent;
+    table-layout: fixed;
 }
 
 #calendarTable tbody td {
@@ -56,7 +57,9 @@ body{
     font-weight: bold;
     border-radius: 5px;
     vertical-align: top;
-    /* Usunięte sztywne height: 12vh; */
+    box-sizing: border-box;
+    overflow-y: auto;
+    height: 12vh;
 }
 
 #calendarTable tbody td:hover {
@@ -64,14 +67,12 @@ body{
     cursor: pointer;
 }
 
-/* Zwykłe nazwy dni */
 .day-name {
     font-size: 14px;
     color: #666;
     margin-bottom: 5px;
 }
 
-/* Dni z poprzedniego i następnego miesiąca */
 #calendarTable tbody td.inactive-month {
     background-color: #e8e8e8;
     color: #a0a0a0;
@@ -124,11 +125,11 @@ body{
     box-sizing: border-box;
 }
 #actionContent {
-    margin-top: 40px; /* Odstęp od przycisku zamykania */
+    margin-top: 40px; 
     height: calc(100% - 40px);
     display: flex;
     flex-direction: column;
-    gap: 10px; /* Odstęp między elementami */
+    gap: 10px; 
 }
 #textInput, #dateInput, #timeInputStarts, #timeInputEnds, 
 #categoryId, #saveButton, #textInput, #checkboxCategory, #showMore, 
@@ -201,4 +202,18 @@ body{
     z-index: 100;
 
     
+}
+.dots-container {
+    display: flex;
+    justify-content: center;
+    gap: 4px;
+    margin-top: 8px;
+    flex-wrap: wrap; 
+    width: 100%;
+}
+.event-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%; 
+    box-shadow: 0 1px 3px rgba(0,0,0,0.3);
 }
