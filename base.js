@@ -18,96 +18,63 @@ const categorySelect = document.getElementById("categorySelect");
 const categoryId = document.getElementById("categoryId");
 const newCategoryInput = document.getElementById("newCategory");
 const colorOfNewCategory = document.getElementById("colorNewCategory");
+
 const now = new Date();
-    const currentDate = now.getDate();
-    const currentMonth = now.getMonth();
-    let displayMonth = currentMonth;
-    const currentYear = now.getFullYear();
-    let displayYear = currentYear;
-    const hour = now.getHours();
-    const minute = now.getMinutes();
-    const second = now.getSeconds();
+const currentDate = now.getDate();
+const currentMonth = now.getMonth();
+let displayMonth = currentMonth;
+const currentYear = now.getFullYear();
+let displayYear = currentYear;
+
 let categories = [
     {name: "Colleague", color: "#FF5733"}, 
     {name: "Work", color: "#33FF57"}
 ];
 let events = [];
 let selectedDate = ""; 
+
 const prevMonth = () => {
     displayMonth--; 
     switchingMonth();
     renderCalendar();
 };
+
 const nextMonth = () => {
-   displayMonth++; 
-  switchingMonth();
-  renderCalendar();
-    
+    displayMonth++; 
+    switchingMonth();
+    renderCalendar();
 };
+
 const creatingCalendarBox = () => {
     const now = new Date();
     const currentDate = now.getDate();
     const currentMonth = now.getMonth();
-    let displayMonth = currentMonth;
     const currentYear = now.getFullYear();
-    const hour = now.getHours();
-    const minute = now.getMinutes();
-    const second = now.getSeconds();
-   
+    const hour = now.getHours().toString().padStart(2, '0');
+    const minute = now.getMinutes().toString().padStart(2, '0');
+    const second = now.getSeconds().toString().padStart(2, '0');
+    
     dateDisplay.textContent = `${currentDate}/${currentMonth + 1}/${currentYear} ${hour}:${minute}:${second}`;
-
 };
+
 const updateTime = () => {
     setInterval(() => {
         creatingCalendarBox();
     }, 1000);
 };
+
 const switchingMonth = () => {
     if (displayMonth < 0) {
         displayMonth = 11;
         displayYear--;
-    }else if (displayMonth > 11) {
+    } else if (displayMonth > 11) {
         displayMonth = 0;
         displayYear++;
     }
-    switch (displayMonth) {
-        case 0:
-            chosenMonth.textContent = `January ${displayYear}`;
-            break;
-        case 1:
-            chosenMonth.textContent = `February ${displayYear}`;
-            break;
-        case 2:
-            chosenMonth.textContent = `March ${displayYear}`;
-            break;
-        case 3:
-            chosenMonth.textContent = `April ${displayYear}`;
-            break;
-        case 4:
-            chosenMonth.textContent = `May ${displayYear}`;
-            break;
-        case 5:
-            chosenMonth.textContent = `June ${displayYear}`;
-            break;
-        case 6:
-            chosenMonth.textContent = `July ${displayYear}`;
-            break;
-        case 7:
-            chosenMonth.textContent = `August ${displayYear}`;
-            break;
-        case 8:
-            chosenMonth.textContent = `September ${displayYear}`;
-            break;
-        case 9:
-            chosenMonth.textContent = `October ${displayYear}`;
-            break;
-        case 10:
-            chosenMonth.textContent = `November ${displayYear}`;
-            break;
-        case 11:
-            chosenMonth.textContent = `December ${displayYear}`;
-            break;
-    }
+    
+    // Uproszczone wyświetlanie nazwy miesiąca
+    const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    chosenMonth.textContent = `${monthNames[displayMonth]} ${displayYear}`;
 };
 
 const renderCalendar = () => {
@@ -128,7 +95,6 @@ const renderCalendar = () => {
         const td = document.createElement("td");
         const currentDayName = dayNames[i % 7]; 
         
-        
         let cellYear = displayYear;
         let cellMonth = displayMonth + 1;
         let cellDay;
@@ -148,6 +114,9 @@ const renderCalendar = () => {
             if (cellMonth === 13) { cellMonth = 1; cellYear += 1; }
             nextMonthDayCounter++;
         }
+        if (cellDay === currentDate && cellMonth === currentMonth + 1 && cellYear === currentYear) {
+            td.classList.add("today-cell");
+        }
 
         td.innerHTML = `
             <div class="day-name">${currentDayName}</div>
@@ -155,7 +124,6 @@ const renderCalendar = () => {
         `;
 
         const cellDateString = `${cellYear}-${cellMonth}-${cellDay}`;
-        
         const eventsForThisDay = events.filter(ev => ev.date === cellDateString);
         
         if (eventsForThisDay.length > 0) {
@@ -166,6 +134,18 @@ const renderCalendar = () => {
                 const dot = document.createElement("div");
                 dot.classList.add("event-dot");
                 dot.style.backgroundColor = ev.color; 
+                
+                
+                let tooltipText = ev.title; 
+                if(ev.startTime || ev.endTime) {
+                    tooltipText += `\n🕒 ${ev.startTime} - ${ev.endTime}`;
+                }
+                if(ev.description) {
+                    tooltipText += `\n📝 ${ev.description}`;
+                }
+                
+                
+                dot.setAttribute("data-tooltip", tooltipText);
                 dotsContainer.appendChild(dot);
             });
             
@@ -180,9 +160,9 @@ const renderCalendar = () => {
         }
     }
 };
+
 const actionAdding = (event) => { 
     const clickedCell = event.target.closest("td");
-    
     if (!clickedCell) return;
     
     const dayNumber = parseInt(clickedCell.querySelector(".day-number").textContent);
@@ -200,11 +180,12 @@ const actionAdding = (event) => {
         }
     }
     
+    // Zapisujemy datę poprawnie!
     selectedDate = `${actionYear}-${actionMonth}-${dayNumber}`;
-    
     actionDate.textContent = `Action Date: ${selectedDate}`;
     actionComm.style.display = "block";
 };
+
 const saveEvent = () => {
     const title = getTitle();
     if(!title) {
@@ -213,7 +194,6 @@ const saveEvent = () => {
     }
 
     const categoryName = getCategory();
-    
     if (categoryName === "-- Choose a category --") {
         positiveOrNegative("Please select a valid category!", false);
         return;
@@ -243,66 +223,14 @@ const saveEvent = () => {
     document.getElementById("textInput").value = "";
     document.getElementById("timeInputStarts").value = "";
     document.getElementById("timeInputEnds").value = "";
-    document.getElementById("categoryId").value = "";
+    categoryId.value = ""; 
     
     positiveOrNegative("Event saved successfully!", true);
     
     renderCalendar();
 };
-const addNewCategory = () => {
-    const newCategoryInput = document.getElementById("newCategory");
-    const newCategory = newCategoryInput.value.trim();
-    const removeCategorySelect = document.getElementById("removeCategory");
-    const newCategoryColor = document.getElementById("colorNewCategory");
-    if (!newCategory) {
-        positiveOrNegative("Please enter a category name!", false);
-        return;
-    }
-       let newCategoryUpper = newCategory.charAt(0).toUpperCase() + newCategory.slice(1).toLowerCase();
-        if(categories.some(cat => cat.name === newCategoryUpper)) {
-            positiveOrNegative("Category already exists!", false);
-            return;
-        }
-        let newCategoryColorValue = newCategoryColor.value;
-        categories.push({name: newCategoryUpper, color: newCategoryColorValue});
-        const option = document.createElement("option");
-        option.value = newCategoryUpper;
-        option.textContent = newCategoryUpper;
-        document.getElementById("categoryId").appendChild(option);
-        document.getElementById("categorySelect").appendChild(option.cloneNode(true));
-        document.getElementById("removeCategory").appendChild(option.cloneNode(true));
-        newCategoryInput.value = "";
-        newCategoryColor.value = "#000000";
-        positiveOrNegative("Category added successfully!", true);
-    }
-const positiveOrNegative = (message, isPositive) => {
-    callbackDiv.textContent = message;
-    callbackDiv.style.display = "flex";
-    callbackDiv.style.backgroundColor = isPositive ? "green" : "red";
-    setTimeout(() => {
-        callbackDiv.style.display = "none";
-    }, 3000)
-};
-const getTimes = () => {
-    const startTime = document.getElementById("timeInputStarts").value;
-    const endTime = document.getElementById("timeInputEnds").value;
-    return { startTime, endTime };
-};
-const getTitle = () => {
-    const titleInput = document.getElementById("actionTittle");
-    return titleInput.value.trim();
-};
-const getDescription = () => {
-    const descriptionInput = document.getElementById("textInput");
-    return descriptionInput.value.trim();
-};
-const getCategory = () => {
-    const categorySelect = document.getElementById("categoryId");
-    return categorySelect.options[categorySelect.selectedIndex].text;
-}
 
 const renderCategoriesList = () => {
-    
     const placeholderHTML = '<option value="" disabled selected hidden>-- Choose a category --</option>';
 
     categoryId.innerHTML = placeholderHTML;
@@ -319,6 +247,34 @@ const renderCategoriesList = () => {
         removeCategorySelect.appendChild(option.cloneNode(true));
     });
 };
+
+const addNewCategory = () => {
+    const newCategoryInput = document.getElementById("newCategory");
+    const newCategory = newCategoryInput.value.trim();
+    const newCategoryColor = document.getElementById("colorNewCategory");
+    
+    if (!newCategory) {
+        positiveOrNegative("Please enter a category name!", false);
+        return;
+    }
+    
+    let newCategoryUpper = newCategory.charAt(0).toUpperCase() + newCategory.slice(1).toLowerCase();
+    
+    if(categories.some(cat => cat.name === newCategoryUpper)) {
+        positiveOrNegative("Category already exists!", false);
+        return;
+    }
+    
+    categories.push({name: newCategoryUpper, color: newCategoryColor.value});
+    
+   
+    renderCategoriesList();
+    
+    newCategoryInput.value = "";
+    newCategoryColor.value = "#000000";
+    positiveOrNegative("Category added successfully!", true);
+};
+
 const removeCategory = () => {
     if(removeCategorySelect.value === "") {
         positiveOrNegative("Please select a category to remove!", false);
@@ -331,47 +287,79 @@ const removeCategory = () => {
     if (categoryIndex !== -1) {
         categories.splice(categoryIndex, 1);
         
-        const catIdOption = categoryId.querySelector(`option[value="${selectedCategory}"]`);
-        if (catIdOption) catIdOption.remove();
-        
-        const catSelectOption = categorySelect.querySelector(`option[value="${selectedCategory}"]`);
-        if (catSelectOption) catSelectOption.remove();
-        
-        const removeCatOption = removeCategorySelect.querySelector(`option[value="${selectedCategory}"]`);
-        if (removeCatOption) removeCatOption.remove();
-        
-        categoryId.value = "";
-        categorySelect.value = "";
-        removeCategorySelect.value = "";
+        renderCategoriesList();
         
         positiveOrNegative("Category removed successfully!", true);
     } else {
         positiveOrNegative("Selected category not found!", false);
     }
 };
+
+const positiveOrNegative = (message, isPositive) => {
+    callbackDiv.textContent = message;
+    callbackDiv.style.display = "flex";
+    callbackDiv.style.backgroundColor = isPositive ? "green" : "red";
+    setTimeout(() => {
+        callbackDiv.style.display = "none";
+    }, 3000)
+};
+
+const getTimes = () => {
+    const startTime = document.getElementById("timeInputStarts").value;
+    const endTime = document.getElementById("timeInputEnds").value;
+    return { startTime, endTime };
+};
+
+const getTitle = () => {
+    const titleInput = document.getElementById("actionTittle");
+    return titleInput.value.trim();
+};
+
+const getDescription = () => {
+    const descriptionInput = document.getElementById("textInput");
+    return descriptionInput.value.trim();
+};
+
+const getCategory = () => {
+    return categoryId.options[categoryId.selectedIndex].text;
+};
+
+
 closeButton.addEventListener("click", () => { 
     actionComm.style.display = "none"; 
     additionalInputs.style.display = "none"; 
     showMoreButton.textContent = "Show more";
 });
+
 calendarBody.addEventListener("click", actionAdding);
 nextMontButton.addEventListener("click", nextMonth);
 prevMonthButton.addEventListener("click", prevMonth);
+
 showMoreButton.addEventListener("click", () => { 
     if (additionalInputs.style.display != "flex"){ 
         additionalInputs.style.display = "flex";
-        showMoreButton.textContent = "Show less";}
-        else { 
-            additionalInputs.style.display = "none"; 
-            showMoreButton.textContent = "Show more";}
-        });
-saveButton.addEventListener("click", () => {
-    saveEvent();
- });
+        showMoreButton.textContent = "Show less";
+    } else { 
+        additionalInputs.style.display = "none"; 
+        showMoreButton.textContent = "Show more";
+    }
+});
+
+saveButton.addEventListener("click", saveEvent);
 addCategoryButton.addEventListener("click", addNewCategory);
 removeCategoryButton.addEventListener("click", removeCategory);
+
+
 creatingCalendarBox();
+switchingMonth(); 
 renderCalendar();
-switchingMonth();
 updateTime();
 renderCategoriesList();
+
+/*TODO:
+1- usuwanie kropki ze zdarzeniem
+2- dymek tylko z tytulem i czasem natomiast opis itd w innym dokladnym okienku (myśle na dole?????? albo na srodku z przezroczystością do 50%????)
+2- restrukturyzacja show more na dodatkowego diva category manager
+3- local storage (to juz pod koniec)
+4- logowanie i rejestrowanie do deadline-trackera
+*/ 
