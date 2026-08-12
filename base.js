@@ -18,6 +18,7 @@ const categorySelect = document.getElementById("categorySelect");
 const categoryId = document.getElementById("categoryId");
 const newCategoryInput = document.getElementById("newCategory");
 const colorOfNewCategory = document.getElementById("colorNewCategory");
+const showDetailsOfDescriptionBtn =  document.getElementById("shoDetailsOfDescription")
 
 const now = new Date();
 const currentDate = now.getDate();
@@ -140,11 +141,7 @@ const renderCalendar = () => {
                 if(ev.startTime || ev.endTime) {
                     tooltipText += `\n🕒 ${ev.startTime} - ${ev.endTime}`;
                 }
-                if(ev.description) {
-                    tooltipText += `\n📝 ${ev.description}`;
-                }
-                
-                
+                             
                 dot.setAttribute("data-tooltip", tooltipText);
                 dotsContainer.appendChild(dot);
             });
