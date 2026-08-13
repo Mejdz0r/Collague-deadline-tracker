@@ -19,7 +19,8 @@ const categoryId = document.getElementById("categoryId");
 const newCategoryInput = document.getElementById("newCategory");
 const colorOfNewCategory = document.getElementById("colorNewCategory");
 const showDetailsOfDescriptionBtn =  document.getElementById("shoDetailsOfDescription")
-
+const eventDetailsPanel = document.querySelector(".eventDescription");
+const closeDetailsButton = document.getElementById("closeDetailsButton");
 const now = new Date();
 const currentDate = now.getDate();
 const currentMonth = now.getMonth();
@@ -177,7 +178,6 @@ const actionAdding = (event) => {
         }
     }
     
-    // Zapisujemy datę poprawnie!
     selectedDate = `${actionYear}-${actionMonth}-${dayNumber}`;
     actionDate.textContent = `Action Date: ${selectedDate}`;
     actionComm.style.display = "block";
@@ -320,7 +320,9 @@ const getDescription = () => {
 const getCategory = () => {
     return categoryId.options[categoryId.selectedIndex].text;
 };
-
+const closeDetailsPanel = () => {
+    eventDetailsPanel.classList.remove("active");
+};
 
 closeButton.addEventListener("click", () => { 
     actionComm.style.display = "none"; 
@@ -345,7 +347,7 @@ showMoreButton.addEventListener("click", () => {
 saveButton.addEventListener("click", saveEvent);
 addCategoryButton.addEventListener("click", addNewCategory);
 removeCategoryButton.addEventListener("click", removeCategory);
-
+closeDetailsButton.addEventListener("click", closeDetailsPanel);
 
 creatingCalendarBox();
 switchingMonth(); 
@@ -355,6 +357,7 @@ renderCategoriesList();
 
 /*TODO:
 1- usuwanie kropki ze zdarzeniem
+2- po kliknieciu kropki wysuwa sie opis z dolu
 2- dymek tylko z tytulem i czasem natomiast opis itd w innym dokladnym okienku (myśle na dole?????? albo na srodku z przezroczystością do 50%????)
 2- restrukturyzacja show more na dodatkowego diva category manager
 3- local storage (to juz pod koniec)
