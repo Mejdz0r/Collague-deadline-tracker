@@ -264,17 +264,33 @@ body{
 }
 .eventDescription {
     position: fixed;
-    bottom: 0; 
-    left: 0;   
-    width: 100vw; 
-    height: 20cvh; 
+    bottom: 0;
+    left: 0;
+    width: 100vw;
+    height: 35vh; 
     background-color: #008CBA;
-    color: white; 
+    color: white;
     padding: 20px;
-    box-sizing: border-box; 
-    z-index: 2000; 
+    box-sizing: border-box;
+    z-index: 2000;
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
     box-shadow: 0 -5px 15px rgba(0,0,0,0.3);
-    text-align: center;
+    transform: translateY(100%); 
+    transition: transform 0.4s ease-in-out;
+}
+
+/* Tę klasę będziemy dodawać w JavaScripcie, gdy ktoś kliknie przycisk */
+.eventDescription.active {
+    transform: translateY(0); /* Zwraca panel na jego właściwe miejsce (wysuwa go) */
+}
+#closeDetailsButton{
+    position: absolute; 
+    top: 10px;  
+    background: white; 
+    color: black; 
+    border: none; 
+    padding: 5px 10px; 
+    border-radius: 5px; 
+    cursor: pointer;
 }
