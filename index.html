@@ -1,1 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    
+</head>
 
+<body>
+    <section class="calendar-box">
+        <div class="callback"></div>
+        <section class="calendar-header">
+            <button id="prevMonth">Previous Month</button>
+            <h2 id="dateDisplay"></h2>
+            <h2 id="chosenMonth"></h2>
+            <button id="nextMonth">Next Month</button>
+        </section>
+        <section id="calendar">
+            <table id="calendarTable">
+                <tbody id="calendarBody"></tbody>
+            </table>
+        </section>
+        <div class="actionComm">
+            <button id="closeButton">X</button>
+            <div id="actionContent">
+                <h2 id="actionDate">Action Date</h2>
+                <label for="actionTittle">Action Title:</label>
+                <input type="text" id="actionTittle">
+                <label for="categoryName">Category:</label>
+                <select name="categoryName" id="categoryId">
+                    <option value="1">Colleague</option>
+                    <option value="2">Work</option>
+                </select>
+                <label for="timeInputStarts">Start Time:</label>
+                <input type="time" id="timeInputStarts">
+                <label for="timeInputEnds">End Time:</label>
+                <input type="time" id="timeInputEnds">
+                <label for="textInput">Descriptions:</label>
+                <input type="text" id="textInput" placeholder="Enter text">
+                <button id="showMore">Show more</button>
+                <button id="saveButton">Save</button>
+                <div id="additionalInputs">
+                    <label for="categorySelect">Category:</label>
+                    <select id="categorySelect">
+                        <option value="1">Colleague</option>
+                        <option value="2">Work</option>
+                    </select>
+                    <label for="colorCategory">Changing Color(of category):</label>
+                    <input type="color" id="colorCategory">
+                    <label for="newCategory">Adding new category:</label>
+                    <input type="text" id="newCategory">
+                    <label for="colorNewCategory">Color of new category:</label>
+                    <input type="color" id="colorNewCategory">
+                    <button id="addCategoryButton">Add Category</button>
+                    <label for="removeCategory">Removing category:</label>
+                    <select id="removeCategory">
+                        <option value="1">Colleague</option>
+                        <option value="2">Work</option>
+                    </select>
+                    <button id="removeCategoryButton">Remove Category</button>
+                </div>
+            </div>
+        </div>  
+        
+    </section>
+    <div class="eventDescription">
+        <Button id="closeDetailsButton">>>>>>>></Button>
+    </div>
+    <script src="base.js"></script>
+</body>
+</html>
