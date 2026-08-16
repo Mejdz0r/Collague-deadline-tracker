@@ -21,20 +21,19 @@ const colorOfNewCategory = document.getElementById("colorNewCategory");
 const showDetailsOfDescriptionBtn =  document.getElementById("shoDetailsOfDescription")
 const eventDetailsPanel = document.querySelector(".eventDescription");
 const closeDetailsButton = document.getElementById("closeDetailsButton");
+const deletingButton = document.getElementById("deletingButton")
 const now = new Date();
 const currentDate = now.getDate();
 const currentMonth = now.getMonth();
-let displayMonth = currentMonth;
 const currentYear = now.getFullYear();
 let displayYear = currentYear;
-
+let displayMonth = currentMonth;
 let categories = [
     {name: "Colleague", color: "#FF5733"}, 
-    {name: "Work", color: "#33FF57"}
-];
+    {name: "Work", color: "#33FF57"}];
 let events = [];
 let selectedDate = ""; 
-
+let currentSelectedEventId = null;
 const prevMonth = () => {
     displayMonth--; 
     switchingMonth();
@@ -116,6 +115,7 @@ const renderCalendar = () => {
             if (cellMonth === 13) { cellMonth = 1; cellYear += 1; }
             nextMonthDayCounter++;
         }
+        
         if (cellDay === currentDate && cellMonth === currentMonth + 1 && cellYear === currentYear) {
             td.classList.add("today-cell");
         }
@@ -137,13 +137,31 @@ const renderCalendar = () => {
                 dot.classList.add("event-dot");
                 dot.style.backgroundColor = ev.color; 
                 
-                
                 let tooltipText = ev.title; 
                 if(ev.startTime || ev.endTime) {
                     tooltipText += `\n🕒 ${ev.startTime} - ${ev.endTime}`;
                 }
-                             
                 dot.setAttribute("data-tooltip", tooltipText);
+                dot.addEventListener("click", (e) => {
+        
+                    e.stopPropagation(); 
+                    currentSelectedEventId = ev.id;
+                    document.getElementById("detailTitle").textContent = ev.title;
+                    document.getElementById("detailDate").textContent = `📅 ${ev.date}`;
+                    
+                    const timeString = (ev.startTime || ev.endTime) ? `🕒 ${ev.startTime || '?'} - ${ev.endTime || '?'}` : '🕒 Cały dzień';
+                    document.getElementById("detailTime").textContent = timeString;
+                    
+                    const categorySpan = document.getElementById("detailCategory");
+                    categorySpan.textContent = `🏷️ ${ev.category}`;
+                    categorySpan.style.color = ev.color; 
+                    categorySpan.style.textShadow = "1px 1px 2px rgba(0,0,0,0.5)"; 
+                    
+                    document.getElementById("detailDesc").textContent = ev.description || "Brak opisu.";
+                    
+                    eventDetailsPanel.classList.add("active");
+                });
+
                 dotsContainer.appendChild(dot);
             });
             
@@ -203,6 +221,7 @@ const saveEvent = () => {
     const eventColor = categoryObj ? categoryObj.color : "#000000";
 
     const newEvent = {
+        id: Date.now().toString(),
         date: selectedDate, 
         title: title,
         description: description,
@@ -323,6 +342,14 @@ const getCategory = () => {
 const closeDetailsPanel = () => {
     eventDetailsPanel.classList.remove("active");
 };
+const deleteEvent = () => {
+    if (!currentSelectedEventId) return;
+    events = events.filter(ev => ev.id !== currentSelectedEventId);
+    closeDetailsPanel();
+    currentSelectedEventId = null;
+    renderCalendar();
+    positiveOrNegative("Event deleted successfully!", true);
+};
 
 closeButton.addEventListener("click", () => { 
     actionComm.style.display = "none"; 
@@ -348,7 +375,7 @@ saveButton.addEventListener("click", saveEvent);
 addCategoryButton.addEventListener("click", addNewCategory);
 removeCategoryButton.addEventListener("click", removeCategory);
 closeDetailsButton.addEventListener("click", closeDetailsPanel);
-
+deletingButton.addEventListener("click", deleteEvent)
 creatingCalendarBox();
 switchingMonth(); 
 renderCalendar();
@@ -356,10 +383,10 @@ updateTime();
 renderCategoriesList();
 
 /*TODO:
-1- usuwanie kropki ze zdarzeniem
-2- po kliknieciu kropki wysuwa sie opis z dolu
-2- dymek tylko z tytulem i czasem natomiast opis itd w innym dokladnym okienku (myśle na dole?????? albo na srodku z przezroczystością do 50%????)
 2- restrukturyzacja show more na dodatkowego diva category manager
 3- local storage (to juz pod koniec)
 4- logowanie i rejestrowanie do deadline-trackera
 */ 
+
+
+//console log---    document.querySelector(".eventDescription").classList.add("active");
