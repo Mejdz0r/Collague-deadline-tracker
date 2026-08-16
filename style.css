@@ -1,4 +1,3 @@
-
 body{
     font-family: Arial, sans-serif;
     background-color: #f0f0f0;
@@ -280,18 +279,55 @@ body{
     transform: translateY(100%); 
     transition: transform 0.4s ease-in-out;
 }
-
-/* Tę klasę będziemy dodawać w JavaScripcie, gdy ktoś kliknie przycisk */
 .eventDescription.active {
-    transform: translateY(0); /* Zwraca panel na jego właściwe miejsce (wysuwa go) */
+    transform: translateY(0); 
 }
-#closeDetailsButton{
+#closeDetailsButton {
     position: absolute; 
-    top: 10px;  
+    top: 2vh;    
+    right: 2vw;  
     background: white; 
     color: black; 
     border: none; 
-    padding: 5px 10px; 
-    border-radius: 5px; 
+    padding: 0.5rem 1rem; 
+    border-radius: 0.3rem; 
     cursor: pointer;
+    font-weight: bold;
+    font-size: 1rem; 
+}
+#detailTitle {
+    margin-top: 1rem; 
+    
+    font-size: clamp(1.5rem, 4vw, 2.5rem); 
+    margin-bottom: 1rem;
+    padding-right: 6rem; 
+}
+.detail-meta {
+    font-size: clamp(1rem, 2vw, 1.25rem); 
+    opacity: 0.9;
+    margin-bottom: 1.5rem;
+    border-bottom: 0.1rem solid rgba(255, 255, 255, 0.3);
+    padding-bottom: 1rem;
+}
+#detailDesc {
+    font-size: clamp(1rem, 2vw, 1.2rem); 
+    line-height: 1.6;
+    white-space: pre-wrap; 
+}
+#deletingButton {
+    background-color: #f44336; 
+    color: white;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 0.3rem;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 1.5rem;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+    transition: background-color 0.2s;
+}
+
+#deletingButton:hover {
+    background-color: #d32f2f; 
 }
