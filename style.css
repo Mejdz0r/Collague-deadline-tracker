@@ -91,20 +91,6 @@ body{
 #calendarTable tbody td.today-cell .day-number {
     color: #1565c0;
 }
-.actionComm {
-    display: none;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 70cqw;
-    height: 70cqh;
-    transform: translate(-50%, -50%);
-    background-color:   #ffffff;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-    z-index: 1000;
-}
 #closeButton {
     position: absolute;
     top: 10px;
@@ -142,9 +128,7 @@ body{
     gap: 10px; 
 }
 #textInput, #dateInput, #timeInputStarts, #timeInputEnds, 
-#categoryId, #saveButton, #textInput, #checkboxCategory, #showMore, 
-#categorySelect, #newCategory, #colorNewCategory, #addCategoryButton,
-#actionTittle, #colorCategory, #removeCategory, #removeCategoryButton  {
+#categoryId, #saveButton, #textInput, #showMore, #actionTittle {
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -152,12 +136,6 @@ body{
 }
 #textInput::placeholder {
     color: #999;
-}
-#additionalInputs {
-    display: none;
-    flex-direction: column;
-    gap: 10px;
-    overflow-y: auto;
 }
 #saveButton {
     background-color: #4CAF50;
@@ -270,7 +248,7 @@ body{
     height: 35vh; 
     background-color: #008CBA;
     color: white;
-    padding: 20px;
+    padding: 60px 20px 20px 20px;
     box-sizing: border-box;
     z-index: 2000;
     border-top-left-radius: 20px;
@@ -281,19 +259,6 @@ body{
 }
 .eventDescription.active {
     transform: translateY(0); 
-}
-#closeDetailsButton {
-    position: absolute; 
-    top: 2vh;    
-    right: 2vw;  
-    background: white; 
-    color: black; 
-    border: none; 
-    padding: 0.5rem 1rem; 
-    border-radius: 0.3rem; 
-    cursor: pointer;
-    font-weight: bold;
-    font-size: 1rem; 
 }
 #detailTitle {
     margin-top: 1rem; 
@@ -330,4 +295,41 @@ body{
 
 #deletingButton:hover {
     background-color: #d32f2f; 
+}
+#closeDetailsButton {
+    position: absolute; 
+    top: 15px; 
+    right: 20px; 
+    background-color: #ffffff; 
+    color: #333; 
+    border: none; 
+    padding: 8px 25px; 
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 16px; 
+    box-shadow: 0 4px 8px rgba(0,0,0,0.4); 
+    z-index: 2001; 
+}
+#additionalInputs {
+    display: none;
+    flex-direction: column;
+    gap: 15px;
+    overflow-y: auto;
+    max-height: 25vh;
+    max-width: 500px;
+    margin: 0 auto;
+    padding-right: 15px; 
+}
+#additionalInputs input[type="color"] {
+    width: 100%;
+    height: 40px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: transparent;
+}
+#additionalInputs input[type="color"]::-webkit-color-swatch {
+    border-radius: 5px;
+    border: 2px solid white;
 }
