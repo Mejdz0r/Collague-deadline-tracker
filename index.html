@@ -39,9 +39,24 @@
                 <input type="time" id="timeInputEnds">
                 <label for="textInput">Descriptions:</label>
                 <input type="text" id="textInput" placeholder="Enter text">
-                <button id="showMore">Show more</button>
+                <button id="showMore">Category Manager</button>
                 <button id="saveButton">Save</button>
-                <div id="additionalInputs">
+                
+            </div>
+        </div>  
+        
+    </section>
+    <div class="eventDescription">
+        <Button id="closeDetailsButton">Hide</Button>
+        <div id="detailsDiv">  
+            <h2 id="detailTitle"></h2>
+            <div class="detail-meta">
+                <span id="detailDate"></span> | <span id="detailTime"></span> | <span id="detailCategory"></span>
+            </div>
+            <p id="detailDesc"></p>
+            <button id="deletingButton">Delete</button>
+        </div>
+        <div id="additionalInputs">
                     <label for="categorySelect">Category:</label>
                     <select id="categorySelect">
                         <option value="1">Colleague</option>
@@ -61,18 +76,6 @@
                     </select>
                     <button id="removeCategoryButton">Remove Category</button>
                 </div>
-            </div>
-        </div>  
-        
-    </section>
-    <div class="eventDescription">
-        <Button id="closeDetailsButton">Hide</Button>
-        <h2 id="detailTitle"></h2>
-        <div class="detail-meta">
-            <span id="detailDate"></span> | <span id="detailTime"></span> | <span id="detailCategory"></span>
-        </div>
-        <p id="detailDesc"></p>
-        <button id="deletingButton">Delete</button>
     </div>
     <script src="base.js"></script>
 </body>
