@@ -18,10 +18,12 @@ const categorySelect = document.getElementById("categorySelect");
 const categoryId = document.getElementById("categoryId");
 const newCategoryInput = document.getElementById("newCategory");
 const colorOfNewCategory = document.getElementById("colorNewCategory");
-const showDetailsOfDescriptionBtn =  document.getElementById("shoDetailsOfDescription")
+const showDetailsOfDescriptionBtn =  document.getElementById("shoDetailsOfDescription");
 const eventDetailsPanel = document.querySelector(".eventDescription");
 const closeDetailsButton = document.getElementById("closeDetailsButton");
-const deletingButton = document.getElementById("deletingButton")
+const deletingButton = document.getElementById("deletingButton");
+const detailsDiv = document.getElementById("detailsDiv");
+const changeColorButton = document.getElementById("changeColorButton");
 const now = new Date();
 const currentDate = now.getDate();
 const currentMonth = now.getMonth();
@@ -158,7 +160,8 @@ const renderCalendar = () => {
                     categorySpan.style.textShadow = "1px 1px 2px rgba(0,0,0,0.5)"; 
                     
                     document.getElementById("detailDesc").textContent = ev.description || "Brak opisu.";
-                    
+                    additionalInputs.style.display = "none";
+                    detailsDiv.style.display = "block";
                     eventDetailsPanel.classList.add("active");
                 });
 
@@ -341,6 +344,8 @@ const getCategory = () => {
 };
 const closeDetailsPanel = () => {
     eventDetailsPanel.classList.remove("active");
+    detailsDiv.style.display="none";
+    additionalInputs.style.display="none"
 };
 const deleteEvent = () => {
     if (!currentSelectedEventId) return;
@@ -350,11 +355,28 @@ const deleteEvent = () => {
     renderCalendar();
     positiveOrNegative("Event deleted successfully!", true);
 };
+const changeCategoryColor = () => {
+    const selectedCatName = categorySelect.options[categorySelect.selectedIndex]?.text;
+    const newColor = document.getElementById("colorCategory").value;
 
+    if (!selectedCatName || selectedCatName === "-- Choose a category --") {
+        positiveOrNegative("Please select a category first!", false);
+        return;
+    }
+    const categoryToUpdate = categories.find(cat => cat.name === selectedCatName);
+    if (categoryToUpdate) {
+        categoryToUpdate.color = newColor;
+    }
+    events.forEach(ev => {
+        if (ev.category === selectedCatName) {
+            ev.color = newColor;
+        }
+    });
+    renderCalendar();
+    positiveOrNegative("Category color updated successfully!", true);
+};
 closeButton.addEventListener("click", () => { 
     actionComm.style.display = "none"; 
-    additionalInputs.style.display = "none"; 
-    showMoreButton.textContent = "Show more";
 });
 
 calendarBody.addEventListener("click", actionAdding);
@@ -362,20 +384,18 @@ nextMontButton.addEventListener("click", nextMonth);
 prevMonthButton.addEventListener("click", prevMonth);
 
 showMoreButton.addEventListener("click", () => { 
-    if (additionalInputs.style.display != "flex"){ 
-        additionalInputs.style.display = "flex";
-        showMoreButton.textContent = "Show less";
-    } else { 
-        additionalInputs.style.display = "none"; 
-        showMoreButton.textContent = "Show more";
-    }
+    detailsDiv.style.display = "none";
+    additionalInputs.style.display = "flex";
+    eventDetailsPanel.classList.add("active");
+    actionComm.style.display = "none";
 });
 
 saveButton.addEventListener("click", saveEvent);
 addCategoryButton.addEventListener("click", addNewCategory);
 removeCategoryButton.addEventListener("click", removeCategory);
 closeDetailsButton.addEventListener("click", closeDetailsPanel);
-deletingButton.addEventListener("click", deleteEvent)
+deletingButton.addEventListener("click", deleteEvent);
+changeColorButton.addEventListener("click", changeCategoryColor);
 creatingCalendarBox();
 switchingMonth(); 
 renderCalendar();
@@ -383,7 +403,8 @@ updateTime();
 renderCategoriesList();
 
 /*TODO:
-2- restrukturyzacja show more na dodatkowego diva category manager
+1- dodać w category manager placeholdera dla dodawania
+2- modyfikacja wydarzen
 3- local storage (to juz pod koniec)
 4- logowanie i rejestrowanie do deadline-trackera
 */ 
