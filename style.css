@@ -387,3 +387,24 @@ body{
 #removeCategoryButton {
     color: #f44336 !important;
 }
+#newCategory::placeholder{
+    color: #666;
+    font-size: 14px;
+    opacity: 1;
+}
+#modifyButton{
+     background-color: rgba(0, 255, 0, 0.5); 
+    color: white;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 0.3rem;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 1.5rem;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+    transition: background-color 0.2s;
+}
+#modifyButton:hover{
+    background-color: rgba(9, 109, 25, 0.85)
+}
