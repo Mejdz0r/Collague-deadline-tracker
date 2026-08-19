@@ -24,6 +24,7 @@ const closeDetailsButton = document.getElementById("closeDetailsButton");
 const deletingButton = document.getElementById("deletingButton");
 const detailsDiv = document.getElementById("detailsDiv");
 const changeColorButton = document.getElementById("changeColorButton");
+const modifyButton = document.getElementById("modifyButton")
 const now = new Date();
 const currentDate = now.getDate();
 const currentMonth = now.getMonth();
@@ -151,7 +152,7 @@ const renderCalendar = () => {
                     document.getElementById("detailTitle").textContent = ev.title;
                     document.getElementById("detailDate").textContent = `📅 ${ev.date}`;
                     
-                    const timeString = (ev.startTime || ev.endTime) ? `🕒 ${ev.startTime || '?'} - ${ev.endTime || '?'}` : '🕒 Cały dzień';
+                    const timeString = (ev.startTime || ev.endTime) ? `🕒 ${ev.startTime || '?'} - ${ev.endTime || '?'}` : '🕒 Whole day';
                     document.getElementById("detailTime").textContent = timeString;
                     
                     const categorySpan = document.getElementById("detailCategory");
@@ -159,7 +160,7 @@ const renderCalendar = () => {
                     categorySpan.style.color = ev.color; 
                     categorySpan.style.textShadow = "1px 1px 2px rgba(0,0,0,0.5)"; 
                     
-                    document.getElementById("detailDesc").textContent = ev.description || "Brak opisu.";
+                    document.getElementById("detailDesc").textContent = ev.description || "No description.";
                     additionalInputs.style.display = "none";
                     detailsDiv.style.display = "block";
                     eventDetailsPanel.classList.add("active");
@@ -375,6 +376,9 @@ const changeCategoryColor = () => {
     renderCalendar();
     positiveOrNegative("Category color updated successfully!", true);
 };
+const modifyEvent = () => {
+    actionComm.style.display="flex";
+}
 closeButton.addEventListener("click", () => { 
     actionComm.style.display = "none"; 
 });
@@ -385,7 +389,7 @@ prevMonthButton.addEventListener("click", prevMonth);
 
 showMoreButton.addEventListener("click", () => { 
     detailsDiv.style.display = "none";
-    additionalInputs.style.display = "flex";
+    additionalInputs.style.display = "grid";
     eventDetailsPanel.classList.add("active");
     actionComm.style.display = "none";
 });
@@ -396,6 +400,7 @@ removeCategoryButton.addEventListener("click", removeCategory);
 closeDetailsButton.addEventListener("click", closeDetailsPanel);
 deletingButton.addEventListener("click", deleteEvent);
 changeColorButton.addEventListener("click", changeCategoryColor);
+modifyButton.addEventListener("click", modifyEvent)
 creatingCalendarBox();
 switchingMonth(); 
 renderCalendar();
@@ -403,8 +408,7 @@ updateTime();
 renderCategoriesList();
 
 /*TODO:
-1- dodać w category manager placeholdera dla dodawania
-2- modyfikacja wydarzen
+2- modyfikacja wydarzen wrzucic uklad z tego podstawowego action comma ale zmienic napisy na update i opisy labeli (chyba????)
 3- local storage (to juz pod koniec)
 4- logowanie i rejestrowanie do deadline-trackera
 */ 
