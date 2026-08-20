@@ -161,8 +161,8 @@ const renderCalendar = () => {
                     categorySpan.style.textShadow = "1px 1px 2px rgba(0,0,0,0.5)"; 
                     
                     document.getElementById("detailDesc").textContent = ev.description || "No description.";
-                    additionalInputs.style.display = "none";
-                    detailsDiv.style.display = "block";
+                    additionalInputs.classList.add("hidden")
+                    detailsDiv.classList.remove("hidden")
                     eventDetailsPanel.classList.add("active");
                 });
 
@@ -202,7 +202,7 @@ const actionAdding = (event) => {
     
     selectedDate = `${actionYear}-${actionMonth}-${dayNumber}`;
     actionDate.textContent = `Action Date: ${selectedDate}`;
-    actionComm.style.display = "block";
+    actionComm.classList.remove("hidden");
 };
 
 const saveEvent = () => {
@@ -237,7 +237,7 @@ const saveEvent = () => {
 
     events.push(newEvent);
 
-    actionComm.style.display = "none";
+    actionComm.classList.add("hidden");
     
     document.getElementById("actionTittle").value = "";
     document.getElementById("textInput").value = "";
@@ -345,8 +345,8 @@ const getCategory = () => {
 };
 const closeDetailsPanel = () => {
     eventDetailsPanel.classList.remove("active");
-    detailsDiv.style.display="none";
-    additionalInputs.style.display="none"
+    detailsDiv.classList.add("hidden");
+    additionalInputs.classList.add("hidden");
 };
 const deleteEvent = () => {
     if (!currentSelectedEventId) return;
@@ -377,10 +377,12 @@ const changeCategoryColor = () => {
     positiveOrNegative("Category color updated successfully!", true);
 };
 const modifyEvent = () => {
-    actionComm.style.display="flex";
+    closeDetailsPanel();
+    actionComm.classList.remove("hidden");
+    
 }
 closeButton.addEventListener("click", () => { 
-    actionComm.style.display = "none"; 
+    actionComm.classList.add("hidden")
 });
 
 calendarBody.addEventListener("click", actionAdding);
@@ -388,10 +390,10 @@ nextMontButton.addEventListener("click", nextMonth);
 prevMonthButton.addEventListener("click", prevMonth);
 
 showMoreButton.addEventListener("click", () => { 
-    detailsDiv.style.display = "none";
-    additionalInputs.style.display = "grid";
+    detailsDiv.classList.add("hidden");
+    additionalInputs.classList.remove("hidden");
     eventDetailsPanel.classList.add("active");
-    actionComm.style.display = "none";
+    actionComm.classList.add("hidden");
 });
 
 saveButton.addEventListener("click", saveEvent);
