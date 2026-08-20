@@ -106,7 +106,7 @@ body{
     background-color:   red;
 }
 .actionComm {
-    display: none;
+    display: block;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -407,4 +407,7 @@ body{
 }
 #modifyButton:hover{
     background-color: rgba(9, 109, 25, 0.85)
+}
+.hidden{
+    display: none !important;
 }
