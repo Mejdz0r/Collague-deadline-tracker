@@ -202,6 +202,12 @@ const actionAdding = (event) => {
     
     selectedDate = `${actionYear}-${actionMonth}-${dayNumber}`;
     actionDate.textContent = `Action Date: ${selectedDate}`;
+    document.querySelector('label[for="actionTittle"]').textContent = "Action Title:";
+    document.querySelector('label[for="categoryId"]').innerHTML="Category"
+    document.querySelector('label[for="timeInputStarts"]').innerHTML="Start Time";
+    document.querySelector('label[for="timeInputEnds"]').innerHTML="End Time";
+    document.querySelector('label[for="textInput"]').innerHTML="Description"
+    saveButton.textContent="Update Event";
     actionComm.classList.remove("hidden");
 };
 
@@ -379,6 +385,31 @@ const changeCategoryColor = () => {
 const modifyEvent = () => {
     closeDetailsPanel();
     actionComm.classList.remove("hidden");
+    document.querySelector('label[for="actionTittle"]').innerHTML="Update Title";
+    document.querySelector('label[for="categoryId"]').innerHTML="Update Category"
+    document.querySelector('label[for="timeInputStarts"]').innerHTML="Update Start Time";
+    document.querySelector('label[for="timeInputEnds"]').innerHTML="Update End Time";
+    document.querySelector('label[for="textInput"]').innerHTML="Update Description"
+    saveButton.textContent="Update Event";
+
+        const eventToEdit = events.find(ev => ev.id === currentSelectedEventId);
+    
+    if (eventToEdit) {
+        document.getElementById("actionTittle").value = eventToEdit.title;
+        document.getElementById("textInput").value = eventToEdit.description;
+        document.getElementById("timeInputStarts").value = eventToEdit.startTime;
+        document.getElementById("timeInputEnds").value = eventToEdit.endTime;
+        
+        const categoryOptions = Array.from(categoryId.options);
+        const optionToSelect = categoryOptions.find(opt => opt.text === eventToEdit.category);
+        if (optionToSelect) optionToSelect.selected = true;
+        
+        selectedDate = eventToEdit.date;
+        actionDate.textContent = `Update Event for Date: ${selectedDate}`;
+
+        events = events.filter(ev => ev.id !== currentSelectedEventId);
+        positiveOrNegative("Event has changed succesful")
+    }
     
 }
 closeButton.addEventListener("click", () => { 
@@ -410,7 +441,25 @@ updateTime();
 renderCategoriesList();
 
 /*TODO:
-2- modyfikacja wydarzen wrzucic uklad z tego podstawowego action comma ale zmienic napisy na update i opisy labeli (chyba????)
+
+1. Zabezpieczenie czasu (Form Validation)
+Obecnie sprawdzasz, czy ktoś wpisał tytuł i wybrał kategorię. Ale co, jeśli użytkownik ustawi Start Time na 15:00, a End Time na 12:00 w tym samym dniu?
+
+Poprawka: Dodanie prostego if'a w saveEvent, który sprawdzi, czy czas zakończenia jest logicznie późniejszy niż czas rozpoczęcia (jeśli oba są podane). Jeśli nie – wyskakuje Twój czerwony komunikat z błędem.
+
+2. Klawisz "Escape" zamykający okna (Świetny UX)
+Użytkownicy nienawidzą celować myszką w mały przycisk "X" albo "Hide", żeby zamknąć formularz.
+
+Poprawka: Dodanie jednego małego nasłuchiwacza na całą stronę (na obiekt window lub document), który sprawdza: "Czy użytkownik wcisnął klawisz Escape? Jeśli tak, a panel .actionComm lub .eventDescription jest otwarty – schowaj je". Zobaczysz, jak bardzo poprawi to przyjemność z "klikania" po Twojej apce.
+
+3. Filtrowanie wydarzeń (Feature)
+Skoro masz już kategorie (Work, Colleague itp.) i nadajesz im różne kolory kropek, fajnie byłoby mieć nad kalendarzem mały Select (lista rozwijana): "Pokaż wszystko / Pokaż tylko Work".
+
+Poprawka: Po wybraniu "Work", kod przerysowuje kalendarz i pokazuje na nim tylko zielone kropki. Bardzo przydatne, gdy apka z czasem zapełni się dziesiątkami wydarzeń.
+
+
+1- poprawic przycisk zamykania
+2- Upcoming deadlines?(odliczenie czasu do najblizszego wydarzenia i moze +1 tz nastepne i jeszce nastepne ale lekko zblurowane czy coś)
 3- local storage (to juz pod koniec)
 4- logowanie i rejestrowanie do deadline-trackera
 */ 
