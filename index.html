@@ -79,6 +79,29 @@
                     <button id="removeCategoryButton">Remove Category</button>
                 </div>
     </div>
+    <div id="rightSidebar" class="right-sidebar">
+        <button id="rightSidebarToggle" class="rightSidebar-toggle" title="Check upcoming deadlines">⏳</button>
+        <div class="rightSidebar-content">
+            <h2>Upcoming Deadlines</h2>
+            <div id="rightUpcomingEventsList"></div>
+            <div id="showOnlyContainer">
+            <select id="Show only"></select>
+            </div>
+        </div>
+    </div>
+    <div id="leftSidebar" class="left-sidebar">
+        <button id="leftSidebarToggle" class="leftSidebar-toggle" title="Settings">⚙️</button>
+        <div class="leftSidebar-content">  
+                <button id="generalSettingsButton">General Settings</button>
+                <button id="notificationSettingsButton">Notification Settings</button>
+                <button id="accountButton">Account</button>
+        </div>
+    </div>
+    <div class="leftSidebarOnlickEvents">
+    <div id="generalSettings"><p>settings</p><button class="settingsCloseBtn">X</button></div>
+    <div id="notificationSettings"><p>notification settings</p><button class="settingsCloseBtn">X</button></div>
+    <div id="accountSettings"><p>account settings</p><button class="settingsCloseBtn">X</button></div>
+    </div>
     <script src="base.js"></script>
 </body>
 </html>
