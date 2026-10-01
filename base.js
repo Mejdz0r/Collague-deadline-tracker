@@ -25,6 +25,18 @@ const deletingButton = document.getElementById("deletingButton");
 const detailsDiv = document.getElementById("detailsDiv");
 const changeColorButton = document.getElementById("changeColorButton");
 const modifyButton = document.getElementById("modifyButton")
+const rightSidebar = document.getElementById("rightSidebar");
+const rightSidebarToggle = document.getElementById("rightSidebarToggle");
+const leftSidebar = document.getElementById("leftSidebar");
+const leftSidebarToggle = document.getElementById("leftSidebarToggle");
+const generalSettingsButton = document.getElementById("generalSettingsButton");
+const notificationSettingsButton = document.getElementById("notificationSettingsButton");
+const accountButton = document.getElementById("accountButton");
+const leftSidebarOnclickEvents = document.querySelector(".leftSidebarOnlickEvents");
+const generalSettingsContainer =  document.getElementById("generalSettings");
+const notificationSettingsContainer =  document.getElementById("notificationSettings");
+const accountSettingsContainer =  document.getElementById("accountSettings");
+const closeSettingsButtons = document.querySelectorAll(".settingsCloseBtn");
 const now = new Date();
 const currentDate = now.getDate();
 const currentMonth = now.getMonth();
@@ -83,6 +95,10 @@ const switchingMonth = () => {
 
 const renderCalendar = () => {
     calendarBody.innerHTML = "";
+    generalSettingsContainer.classList.add("hidden");
+    notificationSettingsContainer.classList.add("hidden");
+    accountSettingsContainer.classList.add("hidden");
+    leftSidebarOnclickEvents.classList.add("hidden");
 
     let firstDay = new Date(displayYear, displayMonth, 1).getDay();
     firstDay = firstDay === 0 ? 6 : firstDay - 1; 
@@ -207,7 +223,7 @@ const actionAdding = (event) => {
     document.querySelector('label[for="timeInputStarts"]').innerHTML="Start Time";
     document.querySelector('label[for="timeInputEnds"]').innerHTML="End Time";
     document.querySelector('label[for="textInput"]').innerHTML="Description"
-    saveButton.textContent="Update Event";
+    saveButton.textContent="Save Event";
     actionComm.classList.remove("hidden");
 };
 
@@ -240,7 +256,10 @@ const saveEvent = () => {
         startTime: startTime,
         endTime: endTime
     };
-
+    if(startTime && endTime && startTime > endTime) {
+        positiveOrNegative("End Time cannot be earlier than Start Time!", false);
+        return;
+    }
     events.push(newEvent);
 
     actionComm.classList.add("hidden");
@@ -408,25 +427,77 @@ const modifyEvent = () => {
         actionDate.textContent = `Update Event for Date: ${selectedDate}`;
 
         events = events.filter(ev => ev.id !== currentSelectedEventId);
-        positiveOrNegative("Event has changed succesful")
+        positiveOrNegative("Event has changed successfully!", true);
     }
     
 }
+const rightSidebarFunction = () => {
+rightSidebar.classList.toggle("open");
+    
+    if (rightSidebar.classList.contains("open")) {
+        rightSidebarToggle.textContent = "⏳";
+    } else {
+        rightSidebarToggle.textContent = "⏳";
+    }
+
+};
+const leftSidebarFunction = () => {
+leftSidebar.classList.toggle("open");
+
+    if (leftSidebar.classList.contains("open")) {
+        leftSidebarToggle.textContent = "⚙️";
+    } else {
+        leftSidebarToggle.textContent = "⚙️";
+    }
+};
+const generalSettings = () => {
+    leftSidebarOnclickEvents.classList.remove("hidden");
+    generalSettingsContainer.classList.remove("hidden");
+};
+const notificationSettings = () => {
+    leftSidebarOnclickEvents.classList.remove("hidden");
+    notificationSettingsContainer.classList.remove("hidden");
+};
+const accountSettings = () => {
+    leftSidebarOnclickEvents.classList.remove("hidden");
+    accountSettingsContainer.classList.remove("hidden");
+};
 closeButton.addEventListener("click", () => { 
     actionComm.classList.add("hidden")
 });
-
-calendarBody.addEventListener("click", actionAdding);
-nextMontButton.addEventListener("click", nextMonth);
-prevMonthButton.addEventListener("click", prevMonth);
-
 showMoreButton.addEventListener("click", () => { 
     detailsDiv.classList.add("hidden");
     additionalInputs.classList.remove("hidden");
     eventDetailsPanel.classList.add("active");
     actionComm.classList.add("hidden");
 });
-
+document.addEventListener("keydown", (event) => {
+   
+    if (event.key === "Escape") {
+        
+        if (!actionComm.classList.contains("hidden")) {
+            actionComm.classList.add("hidden");
+            actionComm.classList.remove("actionCommModify");
+        }
+        
+        else if (eventDetailsPanel.classList.contains("active")) {
+            closeDetailsPanel();
+        }
+        else if (leftSidebar.classList.contains("open")) {
+            leftSidebar.classList.remove("open");
+            leftSidebarToggle.textContent = "⚙️";
+        }
+        else if (rightSidebar.classList.contains("open")) {
+            rightSidebar.classList.remove("open");
+            rightSidebarToggle.textContent = "⏳";
+        }
+    }
+});
+calendarBody.addEventListener("click", actionAdding);
+nextMontButton.addEventListener("click", nextMonth);
+prevMonthButton.addEventListener("click", prevMonth);
+leftSidebarToggle.addEventListener("click", leftSidebarFunction);
+rightSidebarToggle.addEventListener("click", rightSidebarFunction);
 saveButton.addEventListener("click", saveEvent);
 addCategoryButton.addEventListener("click", addNewCategory);
 removeCategoryButton.addEventListener("click", removeCategory);
@@ -434,6 +505,17 @@ closeDetailsButton.addEventListener("click", closeDetailsPanel);
 deletingButton.addEventListener("click", deleteEvent);
 changeColorButton.addEventListener("click", changeCategoryColor);
 modifyButton.addEventListener("click", modifyEvent)
+generalSettingsButton.addEventListener("click", generalSettings);
+notificationSettingsButton.addEventListener("click", notificationSettings);
+accountButton.addEventListener("click", accountSettings);
+closeSettingsButtons.forEach(btn => {
+    btn.addEventListener("click", () => {
+        generalSettingsContainer.classList.add("hidden");
+        notificationSettingsContainer.classList.add("hidden");
+        accountSettingsContainer.classList.add("hidden");
+        leftSidebarOnclickEvents.classList.add("hidden");
+    });});
+
 creatingCalendarBox();
 switchingMonth(); 
 renderCalendar();
@@ -441,17 +523,6 @@ updateTime();
 renderCategoriesList();
 
 /*TODO:
-
-1. Zabezpieczenie czasu (Form Validation)
-Obecnie sprawdzasz, czy ktoś wpisał tytuł i wybrał kategorię. Ale co, jeśli użytkownik ustawi Start Time na 15:00, a End Time na 12:00 w tym samym dniu?
-
-Poprawka: Dodanie prostego if'a w saveEvent, który sprawdzi, czy czas zakończenia jest logicznie późniejszy niż czas rozpoczęcia (jeśli oba są podane). Jeśli nie – wyskakuje Twój czerwony komunikat z błędem.
-
-2. Klawisz "Escape" zamykający okna (Świetny UX)
-Użytkownicy nienawidzą celować myszką w mały przycisk "X" albo "Hide", żeby zamknąć formularz.
-
-Poprawka: Dodanie jednego małego nasłuchiwacza na całą stronę (na obiekt window lub document), który sprawdza: "Czy użytkownik wcisnął klawisz Escape? Jeśli tak, a panel .actionComm lub .eventDescription jest otwarty – schowaj je". Zobaczysz, jak bardzo poprawi to przyjemność z "klikania" po Twojej apce.
-
 3. Filtrowanie wydarzeń (Feature)
 Skoro masz już kategorie (Work, Colleague itp.) i nadajesz im różne kolory kropek, fajnie byłoby mieć nad kalendarzem mały Select (lista rozwijana): "Pokaż wszystko / Pokaż tylko Work".
 
