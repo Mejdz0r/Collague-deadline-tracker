@@ -1,3 +1,4 @@
+const isLoggedIn = true;
 const nextMontButton = document.getElementById("nextMonth");
 const prevMonthButton = document.getElementById("prevMonth");
 const dateDisplay = document.getElementById("dateDisplay");
@@ -198,6 +199,30 @@ const renderCalendar = () => {
 };
 
 const actionAdding = (event) => { 
+         if (!generalSettingsContainer.classList.contains("hidden")) {
+            generalSettingsContainer.classList.add("hidden");
+            leftSidebarOnclickEvents.classList.add("hidden");
+        }
+        else if (!notificationSettingsContainer.classList.contains("hidden")) {
+            notificationSettingsContainer.classList.add("hidden");
+            leftSidebarOnclickEvents.classList.add("hidden");
+        }
+        else if (!accountSettingsContainer.classList.contains("hidden")) {
+            accountSettingsContainer.classList.add("hidden");
+            leftSidebarOnclickEvents.classList.add("hidden");
+        }
+        
+        else if (eventDetailsPanel.classList.contains("active")) {
+            closeDetailsPanel();
+        }
+        else if (leftSidebar.classList.contains("open")) {
+            leftSidebar.classList.remove("open");
+            leftSidebarToggle.textContent = "⚙️";
+        }
+        else if (rightSidebar.classList.contains("open")) {
+            rightSidebar.classList.remove("open");
+            rightSidebarToggle.textContent = "⏳";
+        }
     const clickedCell = event.target.closest("td");
     if (!clickedCell) return;
     
@@ -462,6 +487,25 @@ const accountSettings = () => {
     leftSidebarOnclickEvents.classList.remove("hidden");
     accountSettingsContainer.classList.remove("hidden");
 };
+const initApp = () => {
+    if (isLoggedIn) {
+        document.querySelector(".calendar-box").classList.remove("hidden");
+        
+        creatingCalendarBox();
+        switchingMonth(); 
+        renderCalendar();
+        updateTime();
+        renderCategoriesList();
+        
+        console.log("Zalogowano pomyślnie. Ładowanie kalendarza...");
+    } else {
+        document.querySelector(".calendar-box").classList.add("hidden");
+        document.getElementById("rightSidebarToggle").classList.add("hidden");
+        document.getElementById("leftSidebarToggle").classList.add("hidden");
+        
+        console.log("Odmowa dostępu. Użytkownik nie jest zalogowany.");
+    }
+};
 closeButton.addEventListener("click", () => { 
     actionComm.classList.add("hidden")
 });
@@ -474,14 +518,17 @@ showMoreButton.addEventListener("click", () => {
 document.addEventListener("keydown", (event) => {
    
     if (event.key === "Escape") {
-        
-        if (!actionComm.classList.contains("hidden")) {
-            actionComm.classList.add("hidden");
-            actionComm.classList.remove("actionCommModify");
+        if (!generalSettingsContainer.classList.contains("hidden")) {
+            generalSettingsContainer.classList.add("hidden");
+            leftSidebarOnclickEvents.classList.add("hidden");
         }
-        
-        else if (eventDetailsPanel.classList.contains("active")) {
-            closeDetailsPanel();
+        else if (!notificationSettingsContainer.classList.contains("hidden")) {
+            notificationSettingsContainer.classList.add("hidden");
+            leftSidebarOnclickEvents.classList.add("hidden");
+        }
+        else if (!accountSettingsContainer.classList.contains("hidden")) {
+            accountSettingsContainer.classList.add("hidden");
+            leftSidebarOnclickEvents.classList.add("hidden");
         }
         else if (leftSidebar.classList.contains("open")) {
             leftSidebar.classList.remove("open");
@@ -491,6 +538,14 @@ document.addEventListener("keydown", (event) => {
             rightSidebar.classList.remove("open");
             rightSidebarToggle.textContent = "⏳";
         }
+        else if (!actionComm.classList.contains("hidden")) {
+            actionComm.classList.add("hidden");
+            actionComm.classList.remove("actionCommModify");
+        }
+        else if (eventDetailsPanel.classList.contains("active")) {
+            closeDetailsPanel();
+        }
+       
     }
 });
 calendarBody.addEventListener("click", actionAdding);
@@ -515,12 +570,8 @@ closeSettingsButtons.forEach(btn => {
         accountSettingsContainer.classList.add("hidden");
         leftSidebarOnclickEvents.classList.add("hidden");
     });});
-
-creatingCalendarBox();
-switchingMonth(); 
-renderCalendar();
-updateTime();
-renderCategoriesList();
+// URUCHOMIENIE LOGIKI
+initApp();
 
 /*TODO:
 3. Filtrowanie wydarzeń (Feature)
@@ -528,8 +579,6 @@ Skoro masz już kategorie (Work, Colleague itp.) i nadajesz im różne kolory kr
 
 Poprawka: Po wybraniu "Work", kod przerysowuje kalendarz i pokazuje na nim tylko zielone kropki. Bardzo przydatne, gdy apka z czasem zapełni się dziesiątkami wydarzeń.
 
-
-1- poprawic przycisk zamykania
 2- Upcoming deadlines?(odliczenie czasu do najblizszego wydarzenia i moze +1 tz nastepne i jeszce nastepne ale lekko zblurowane czy coś)
 3- local storage (to juz pod koniec)
 4- logowanie i rejestrowanie do deadline-trackera
