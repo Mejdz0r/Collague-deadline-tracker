@@ -532,7 +532,7 @@ body{
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.5);
     width: 80%;
-    max-width: 400px;
+    height: 60%;
     text-align: center;
     position: relative; 
 }
@@ -561,4 +561,28 @@ body{
     background-color: #f44336; 
     color: white; 
     transform: scale(1.1);
+}
+#generalSettings {
+    display: flex;
+    flex-direction: column;
+    gap: 10px; 
+    height: 60%;
+    justify-content: center;
+    padding: 10vh 5vw;
+}
+#notificationSettings {
+    display: flex;
+    flex-direction: column;
+    gap: 10px; 
+    height: 60%;
+    justify-content: center;
+    padding: 10vh 5vw;
+}
+#accountSettings {
+    display: flex;
+    flex-direction: column;
+    gap: 10px; 
+    height: 60%;
+    justify-content: center;
+    padding: 10vh 5vw;
 }
