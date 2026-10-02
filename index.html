@@ -9,6 +9,10 @@
 </head>
 
 <body>
+    <div id="loginScreen" class="hidden">
+        <h2>Zaloguj się, aby kontynuować</h2>
+        <!-- future login input -->
+    </div>
     <section class="calendar-box">
         <div class="callback"></div>
         <section class="calendar-header">
@@ -98,9 +102,47 @@
         </div>
     </div>
     <div class="leftSidebarOnlickEvents">
-    <div id="generalSettings"><p>settings</p><button class="settingsCloseBtn">X</button></div>
-    <div id="notificationSettings"><p>notification settings</p><button class="settingsCloseBtn">X</button></div>
-    <div id="accountSettings"><p>account settings</p><button class="settingsCloseBtn">X</button></div>
+        <div id="generalSettings">
+            <button class="settingsCloseBtn">X</button>
+            <label for="themeSelect">Theme:</label>
+            <select id="themeSelect">
+                <option value="light">Light</option>
+                <option value="dark">Dark</option>
+            </select>
+            <label for="languageSelect">Language:</label>
+            <select id="languageSelect">
+                <option value="en">English</option>
+                <option value="es">Español</option>
+                <option value="fr">Français</option>
+                <option value="de">Deutsch</option>
+                <option value="it">Italiano</option>
+                <option value="pt">Português</option>
+                <option value="ru">Русский</option>
+                <option value="zh">中文</option>
+                <option value="ja">日本語</option>
+                <option value="pl">Polski</option>
+            </select>
+            <label for="changesSound">Mute Notifications:</label>
+            <button id="changesSound">Mute</button>
+        </div>
+        <div id="notificationSettings">
+            <button class="settingsCloseBtn">X</button>
+            <label for="emailNotifications">Email Notifications:</label>
+            <button id="emailNotifications">Enable/Disable</button>
+            <label for="userEmail">User Email:</label>
+            <input type="email" id="userEmail" placeholder="Enter your email">
+            <label for="pushNotifications">Push Notifications:</label>
+            <button id="pushNotifications">Enable/Disable</button>
+        </div>
+        <div id="accountSettings">
+            <button class="settingsCloseBtn">X</button>
+            <label for="username">Change Username:</label>
+            <input type="text" id="username" placeholder="Enter your username">
+            <label for="password">Change Password:</label>
+            <input type="password" id="password" placeholder="Enter your password">
+            <input type="password" id="confirmPassword" placeholder="Confirm your password">
+            <button id="changePasswordButton">Change Password</button>
+        </div>
     </div>
     <script src="base.js"></script>
 </body>
