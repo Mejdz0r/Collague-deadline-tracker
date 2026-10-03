@@ -38,6 +38,7 @@ const generalSettingsContainer =  document.getElementById("generalSettings");
 const notificationSettingsContainer =  document.getElementById("notificationSettings");
 const accountSettingsContainer =  document.getElementById("accountSettings");
 const closeSettingsButtons = document.querySelectorAll(".settingsCloseBtn");
+const upcomingDeadlineText = document.getElementById("upcomingDeadlineText")
 const now = new Date();
 const currentDate = now.getDate();
 const currentMonth = now.getMonth();
@@ -203,23 +204,23 @@ const actionAdding = (event) => {
             generalSettingsContainer.classList.add("hidden");
             leftSidebarOnclickEvents.classList.add("hidden");
         }
-        else if (!notificationSettingsContainer.classList.contains("hidden")) {
+        if (!notificationSettingsContainer.classList.contains("hidden")) {
             notificationSettingsContainer.classList.add("hidden");
             leftSidebarOnclickEvents.classList.add("hidden");
         }
-        else if (!accountSettingsContainer.classList.contains("hidden")) {
+        if (!accountSettingsContainer.classList.contains("hidden")) {
             accountSettingsContainer.classList.add("hidden");
             leftSidebarOnclickEvents.classList.add("hidden");
         }
         
-        else if (eventDetailsPanel.classList.contains("active")) {
+        if (eventDetailsPanel.classList.contains("active")) {
             closeDetailsPanel();
         }
-        else if (leftSidebar.classList.contains("open")) {
+        if (leftSidebar.classList.contains("open")) {
             leftSidebar.classList.remove("open");
             leftSidebarToggle.textContent = "⚙️";
         }
-        else if (rightSidebar.classList.contains("open")) {
+        if (rightSidebar.classList.contains("open")) {
             rightSidebar.classList.remove("open");
             rightSidebarToggle.textContent = "⏳";
         }
@@ -250,6 +251,7 @@ const actionAdding = (event) => {
     document.querySelector('label[for="textInput"]').innerHTML="Description"
     saveButton.textContent="Save Event";
     actionComm.classList.remove("hidden");
+    
 };
 
 const saveEvent = () => {
@@ -298,6 +300,7 @@ const saveEvent = () => {
     positiveOrNegative("Event saved successfully!", true);
     
     renderCalendar();
+    getUpcomingDeadline();
 };
 
 const renderCategoriesList = () => {
@@ -457,7 +460,7 @@ const modifyEvent = () => {
     
 }
 const rightSidebarFunction = () => {
-rightSidebar.classList.toggle("open");
+    rightSidebar.classList.toggle("open");
     
     if (rightSidebar.classList.contains("open")) {
         rightSidebarToggle.textContent = "⏳";
@@ -467,7 +470,7 @@ rightSidebar.classList.toggle("open");
 
 };
 const leftSidebarFunction = () => {
-leftSidebar.classList.toggle("open");
+    leftSidebar.classList.toggle("open");
 
     if (leftSidebar.classList.contains("open")) {
         leftSidebarToggle.textContent = "⚙️";
@@ -487,6 +490,17 @@ const accountSettings = () => {
     leftSidebarOnclickEvents.classList.remove("hidden");
     accountSettingsContainer.classList.remove("hidden");
 };
+const getUpcomingDeadline = () => {
+    
+        if (events.length > 0) {
+            const sortedEvents = [...events].sort((a, b) => new Date(a.date) - new Date(b.date));
+            const nearestEvent = sortedEvents[0];
+            upcomingDeadlineText.innerHTML = `Upcoming: <strong>${nearestEvent.title}</strong> (${nearestEvent.date})`;
+        
+        }else {
+            upcomingDeadlineText.innerHTML = "No upcoming deadlines";
+        }
+}
 const initApp = () => {
     if (isLoggedIn) {
         document.querySelector(".calendar-box").classList.remove("hidden");
@@ -496,6 +510,7 @@ const initApp = () => {
         renderCalendar();
         updateTime();
         renderCategoriesList();
+        getUpcomingDeadline();
         
         console.log("Zalogowano pomyślnie. Ładowanie kalendarza...");
     } else {
@@ -574,6 +589,7 @@ closeSettingsButtons.forEach(btn => {
 initApp();
 
 /*TODO:
+dodanie takiego suwaka do upcoming deadlines aby zobaczyc nadchodzące, uwzglednic w upcoming deadlines zmiane kategorii. dodanie zmienych nadchodzacych deadlinow 
 3. Filtrowanie wydarzeń (Feature)
 Skoro masz już kategorie (Work, Colleague itp.) i nadajesz im różne kolory kropek, fajnie byłoby mieć nad kalendarzem mały Select (lista rozwijana): "Pokaż wszystko / Pokaż tylko Work".
 
