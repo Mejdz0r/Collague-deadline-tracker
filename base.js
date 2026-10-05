@@ -39,6 +39,7 @@ const notificationSettingsContainer =  document.getElementById("notificationSett
 const accountSettingsContainer =  document.getElementById("accountSettings");
 const closeSettingsButtons = document.querySelectorAll(".settingsCloseBtn");
 const upcomingDeadlineText = document.getElementById("upcomingDeadlineText")
+const nextDeadlines = document.getElementById("nextDeadlines");
 const now = new Date();
 const currentDate = now.getDate();
 const currentMonth = now.getMonth();
@@ -492,14 +493,26 @@ const accountSettings = () => {
 };
 const getUpcomingDeadline = () => {
     
-        if (events.length > 0) {
-            const sortedEvents = [...events].sort((a, b) => new Date(a.date) - new Date(b.date));
-            const nearestEvent = sortedEvents[0];
-            upcomingDeadlineText.innerHTML = `Upcoming: <strong>${nearestEvent.title}</strong> (${nearestEvent.date})`;
+       if (events.length > 0) {
+    const sortedEvents = [...events].sort((a, b) => new Date(a.date) - new Date(b.date));
+    const nearestEvent = sortedEvents[0];
+    let n = sortedEvents.length;
+    
+    upcomingDeadlineText.innerHTML = `<h1>Upcoming:</h1> <h2>${nearestEvent.title}</h2> (${nearestEvent.date})`;
+    
+    if (n > 1) {
+        nextDeadlines.innerHTML = `<h2>Next Deadline:</h2> <h3>${sortedEvents[1].title}</h3> (${sortedEvents[1].date}) <br><hr><br>`;
         
-        }else {
-            upcomingDeadlineText.innerHTML = "No upcoming deadlines";
+        for (let i = 2; i < n; i++) {
+            nextDeadlines.innerHTML += `Future Deadline: ${sortedEvents[i].title} (${sortedEvents[i].date})<br>`;
         }
+    } else {
+        nextDeadlines.innerHTML = "";
+    }
+} else {
+    upcomingDeadlineText.innerHTML = "No upcoming deadlines";
+    nextDeadlines.innerHTML = "";
+}
 }
 const initApp = () => {
     if (isLoggedIn) {
@@ -589,7 +602,13 @@ closeSettingsButtons.forEach(btn => {
 initApp();
 
 /*TODO:
-dodanie takiego suwaka do upcoming deadlines aby zobaczyc nadchodzące, uwzglednic w upcoming deadlines zmiane kategorii. dodanie zmienych nadchodzacych deadlinow 
+
+0. porobić style dla lewego panela jeszcze bez logiki samego stylea, pozniej logika tz zmiana theme i jezyka
+
+
+
+1.dodanie takiego suwaka do upcoming deadlines aby zobaczyc nadchodzące, uwzglednic w upcoming deadlines zmiane kategorii ktora wyswietli tylko wybrane nadchodzące.
+2. Show in calendar only tz dodanie selecta ktory wybiera np same wydarzenia colleauge i pokazuje tylko to w kalendarzu
 3. Filtrowanie wydarzeń (Feature)
 Skoro masz już kategorie (Work, Colleague itp.) i nadajesz im różne kolory kropek, fajnie byłoby mieć nad kalendarzem mały Select (lista rozwijana): "Pokaż wszystko / Pokaż tylko Work".
 
