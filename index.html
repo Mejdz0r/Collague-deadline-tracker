@@ -111,10 +111,13 @@
         <div id="generalSettings">
             <button class="settingsCloseBtn">X</button>
             <label for="themeSelect">Theme:</label>
-            <select id="themeSelect">
-                <option value="light">Light</option>
-                <option value="dark">Dark</option>
-            </select>
+            <div class="theme-toggle-container">
+                <label for="themeToggle">Dark Mode:</label>
+                <label class="switch">
+                <input type="checkbox" id="themeToggle">
+                <span class="slider round"></span>
+                </label>
+            </div>
             <label for="languageSelect">Language:</label>
             <select id="languageSelect">
                 <option value="en">English</option>
